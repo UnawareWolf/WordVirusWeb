@@ -20,7 +20,8 @@ public class GreetingController {
         greeting.setProgressionHigh(0.1);
         greeting.setRecoveryLow(0.2);
         greeting.setRecoveryHigh(0.4);
-        greeting.setInput("Lorem ipsum dolor sit amet consectetur adipiscing elit. Nunc eu arcu in nisi malesuada molestie ac sit amet nisl. Suspendisse potenti. Nunc a felis pharetra tincidunt est et efficitur dui. Cras quis condimentum odio. Maecenas tempus lobortis tellus et laoreet. Aenean in interdum nibh. Vestibulum nec turpis gravida purus vulputate condimentum. Integer malesuada faucibus enim placerat volutpat. Fusce convallis sapien in nulla sollicitudin mollis.");
+        greeting.setInput(GridMain.getFileAsString("templates/defaultText.txt"));
+        greeting.setFontSize(48);
         model.addAttribute("greeting", greeting);
         return "greeting";
     }
@@ -33,10 +34,6 @@ public class GreetingController {
 
         String[] outputText = GridMain.formatOutputContentFont(virusCharacters);
 
-//        String content = "";
-//        for (String line : outputText) {
-//            content += line;
-//        }
         greeting.setOutput(outputText);
 
         model.addAttribute("greeting", greeting);

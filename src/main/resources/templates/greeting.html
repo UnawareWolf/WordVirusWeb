@@ -1,21 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}" />
+    <title>Zygoponent</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
 </head>
 <body>
 
 <h1>Zygoponent</h1>
+<br/>
 
 <form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
-<!--    <p>Id: <input type="text" th:field="*{id}" /></p>-->
-<!--    <p>-->
-<!--        Infection (low): <input type="text" th:field="*{infectionLow}" />-->
-<!--        Infection (high): <input type="text" th:field="*{infectionHigh}" />-->
-<!--    </p>-->
-    <table>
+
+    <h2>Parameters</h2>
+    <table id="parameters">
         <tr>
             <th>Infection Level</th>
             <th>Infection Rate</th>
@@ -24,21 +22,22 @@
         </tr>
         <tr>
             <th>Low</th>
-            <td><input type="text" th:field="*{infectionLow}"/></td>
-            <td><input type="text" th:field="*{progressionLow}"/></td>
-            <td><input type="text" th:field="*{recoveryLow}"/></td>
+            <td><input size="3" type="text" th:field="*{infectionLow}"/></td>
+            <td><input size="3" type="text" th:field="*{progressionLow}"/></td>
+            <td><input size="3" type="text" th:field="*{recoveryLow}"/></td>
         </tr>
         <tr>
             <th>High</th>
-            <td><input type="text" th:field="*{infectionHigh}"/></td>
-            <td><input type="text" th:field="*{progressionHigh}"/></td>
-            <td><input type="text" th:field="*{recoveryHigh}"/></td>
+            <td><input size="3" type="text" th:field="*{infectionHigh}"/></td>
+            <td><input size="3" type="text" th:field="*{progressionHigh}"/></td>
+            <td><input size="3" type="text" th:field="*{recoveryHigh}"/></td>
         </tr>
     </table>
-<!--    <p>Message: <input type="text" th:field="*{content}" /></p>-->
-    <br />
-    <p>Text: <br /><br /><textarea rows="9" cols="60" th:field="*{input}"></textarea></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    <br/>
+    <p>Font size: <input size="3" type="text" th:field="*{fontSize}"/></p>
+    <br/>
+    <p><h2>Text</h2><textarea rows="9" cols="60" th:field="*{input}"></textarea></p>
+    <p><input type="submit" value="Run" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
 </html>

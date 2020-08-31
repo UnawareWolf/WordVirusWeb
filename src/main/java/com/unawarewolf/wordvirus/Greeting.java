@@ -2,20 +2,12 @@ package com.unawarewolf.wordvirus;
 
 public class Greeting {
 
-//    private long id;
     private double infectionLow, infectionHigh;
     private double progressionLow, progressionHigh;
     private double recoveryLow, recoveryHigh;
+    private int fontSize;
     private String input;
     private String[] output;
-
-//    public long getId() {
-//        return id;
-//    }
-
-//    public void setId(long id) {
-//        this.id = id;
-//    }
 
     public void setInput(String input) {
         this.input = input;
@@ -49,6 +41,10 @@ public class Greeting {
         return recoveryHigh;
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
+
     public String[] getOutput() {
         return output;
     }
@@ -77,13 +73,12 @@ public class Greeting {
         this.recoveryHigh = recoveryHigh;
     }
 
-//    public void setContent(String content) {
-//        this.content = new String[1];
-//        this.content[0] = content;
-//    }
-
     public void setOutput(String[] output) {
         this.output = output;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
     }
 
 }
