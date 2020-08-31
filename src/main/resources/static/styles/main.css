@@ -1,0 +1,59 @@
+@font-face {
+font-family: virusIcons;
+src: url("/fonts/Zygoponent-Regular.woff") format("woff");
+}
+div {
+font-family: virusIcons;
+font-size: 4px;
+padding: 0px;
+line-height: 48px;
+text-align: left;
+left: 10px;
+right: 10px;
+bottom: 10px;
+position: absolute;
+overflow-wrap: break-word;
+}
+blank {
+font-family: virusIcons;
+color: white;
+}
+#layer0 {
+top: 10px;
+}
+#layer1 {
+top: 14px;
+}
+#layer2 {
+top: 18px;
+}
+#layer3 {
+top: 22px;
+}
+#layer4 {
+top: 26px;
+}
+#layer5 {
+top: 30px;
+}
+#layer6 {
+top: 34px;
+}
+#layer7 {
+top: 38px;
+}
+#layer8 {
+top: 42px;
+}
+#layer9 {
+top: 46px;
+}
+#layer10 {
+top: 50px;
+}
+#layer11 {
+top: 54px;
+}
+table, th, td {
+  border: 1px solid black;
+}
