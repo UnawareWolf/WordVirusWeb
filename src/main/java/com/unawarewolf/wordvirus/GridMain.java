@@ -1,8 +1,4 @@
 package com.unawarewolf.wordvirus;
-//import spark.ModelAndView;
-//import spark.template.velocity.VelocityTemplateEngine;
-//
-//import static spark.Spark.*;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,11 +12,11 @@ import java.util.Map;
 @SpringBootApplication
 public class GridMain {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SpringApplication.run(GridMain.class, args);
     }
 
-    public static List<GridVirusCharacter> createVirusCharacterList(char[] charArray, Greeting params) {
+    public static List<GridVirusCharacter> createVirusCharacterList(char[] charArray, InputConfiguration params) {
         List<GridVirusCharacter> gridVirusCharacters = new ArrayList<>();
         Map<Character, GridVirusCharacter> characterMap = new HashMap<>();
         Map<String, Double> parameterMap = new HashMap<>();

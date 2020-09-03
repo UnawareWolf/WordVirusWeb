@@ -5,15 +5,9 @@ function setUpLayerStyles(noOfLayers, fontSize) {
         var layerStyle = document.createElement('style');
         var layerTop = 10 + i*fontSize;
         var rule = "#layer" + i + " {top: " + layerTop + "px;}";
-//        layerStyle.innerHTML = "#layer" + i + " {top: " + layerTop + "px;}";
-
 
         var styleSheet = document.styleSheets[0];
         styleSheet.insertRule(rule, 0);
-//        divStyle.line-height = fontSize * noOfLayers + "px";
-//        document.styleSheets[0].insertRule(rule, 0);
-
-//        document.body.appendChild(layerStyle);
     }
     var divRule = "div {font-size: " + fontSize + "px; line-height: " + fontSize*noOfLayers + "px;}"
 

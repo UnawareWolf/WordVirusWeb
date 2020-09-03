@@ -1,6 +1,6 @@
 package com.unawarewolf.wordvirus;
 
-public class Greeting {
+public class InputConfiguration {
 
     private double infectionLow, infectionHigh;
     private double progressionLow, progressionHigh;
