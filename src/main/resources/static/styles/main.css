@@ -15,9 +15,6 @@ overflow-wrap: break-word;
 body {
 font-family: Helvetica, Arial;
 }
-.noBorder {
-    border: none;
-}
 #parameters td, #parameters th {
     border: 1px solid black;
     padding: 8px;

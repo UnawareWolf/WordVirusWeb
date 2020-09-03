@@ -1,8 +1,6 @@
-
 function setUpLayerStyles(noOfLayers, fontSize) {
 
     for (var i = 0; i < noOfLayers; i++) {
-        var layerStyle = document.createElement('style');
         var layerTop = 10 + i*fontSize;
         var rule = "#layer" + i + " {top: " + layerTop + "px;}";
 
@@ -12,7 +10,6 @@ function setUpLayerStyles(noOfLayers, fontSize) {
     var divRule = "div {font-size: " + fontSize + "px; line-height: " + fontSize*noOfLayers + "px;}"
 
     styleSheet.insertRule(divRule, 0);
-
 }
 
 function populateLayers(content) {
