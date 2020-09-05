@@ -1,19 +1,21 @@
 @font-face {
-font-family: virusIcons;
-src: url("/fonts/Zygoponent-Regular.woff") format("woff");
+    font-family: virusIcons;
+    src: url("/fonts/Zygoponent-Regular.woff") format("woff");
 }
 div {
-font-family: virusIcons;
-padding: 0px;
-text-align: left;
-left: 10px;
-right: 10px;
-bottom: 10px;
-position: absolute;
-overflow-wrap: break-word;
+    font-family: virusIcons;
+    padding: 0px;
+    text-align: left;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    position: absolute;
+}
+#parameters p {
+    position: relative;
 }
 body {
-font-family: Helvetica, Arial;
+    font-family: Helvetica, Arial;
 }
 #parameters td, #parameters th {
     border: 1px solid black;
@@ -22,4 +24,21 @@ font-family: Helvetica, Arial;
 }
 table {
     border-collapse: collapse;
+}
+.error {
+    color: red;
+}
+.bold {
+    font-weight: bold;
+}
+.frontLayer {
+    position: relative;
+    z-index: 1;
+}
+.fontSizeInput {
+    min: 12;
+    step; 12;
+}
+input[type=number] {
+    width: 130px;
 }

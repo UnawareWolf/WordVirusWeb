@@ -1,14 +1,11 @@
 function setUpLayerStyles(noOfLayers, fontSize) {
-
     for (var i = 0; i < noOfLayers; i++) {
-        var layerTop = 10 + i*fontSize;
+        var layerTop = 35 + i*fontSize;
         var rule = "#layer" + i + " {top: " + layerTop + "px;}";
-
         var styleSheet = document.styleSheets[0];
         styleSheet.insertRule(rule, 0);
     }
     var divRule = "div {font-size: " + fontSize + "px; line-height: " + fontSize*noOfLayers + "px;}"
-
     styleSheet.insertRule(divRule, 0);
 }
 
@@ -23,11 +20,11 @@ function populateLayers(content) {
     }
 }
 
-function getMiniFontSize(fontSize) {
-    if (fontSize < 12) {
-        fontSize = 12;
+function getMiniFontSize(fontSize, minFontSize) {
+    if (fontSize < minFontSize) {
+        fontSize = minFontSize;
     }
-    var remainder = fontSize % 12;
-    fontSize = (fontSize - remainder) / 12;
+    var remainder = fontSize % minFontSize;
+    fontSize = (fontSize - remainder) / minFontSize;
     return fontSize;
 }

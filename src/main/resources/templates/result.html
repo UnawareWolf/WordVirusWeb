@@ -2,11 +2,12 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link id="styleSheet" rel="stylesheet" type="text/css" th:href="@{/styles/main.css}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link id="styleSheet" rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <script type="text/javascript" src="/js/manipulateHtml.js"></script>
 </head>
 <body>
+
 <p id="layers"></p>
 
 <script th:inline="javascript">
@@ -14,11 +15,13 @@
     var content = /*[[${inputConfiguration.output}]]*/;
     var fontSize = /*[[${inputConfiguration.fontSize}]]*/;
 
-    setUpLayerStyles(content.length, getMiniFontSize(fontSize));
+    setUpLayerStyles(content.length, getMiniFontSize(fontSize, content.length));
 
     populateLayers(content);
     /*]]>*/
 </script>
-
+<form action="#" th:action="@{/}" th:object="${inputConfiguration}" method="post">
+    <p class="frontLayer"><input type="submit" name="action" value="Regenerate"/> <input type="submit" name="action" value="Back"/></p>
+</form>
 </body>
 </html>
