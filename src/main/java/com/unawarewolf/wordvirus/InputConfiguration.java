@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class InputConfiguration {
 
+    public static final int DEFAULT_CHARACTER_HEIGHT = 12;
+
     private static final String DEFAULT_TXT = "templates/defaultText.txt";
 
     private static final double DEFAULT_INFECTION_LOW = 0.1;
@@ -18,6 +20,7 @@ public class InputConfiguration {
     private static final double DEFAULT_RECOVERY_HIGH = 0.4;
 
     private static final char DEFAULT_INITIALLY_INFECTED = 'e';
+    public static final String BLANK_SQUARE_CODE = "B";
 
     private static final int DEFAULT_FONT_SIZE = 72;
 
@@ -91,14 +94,14 @@ public class InputConfiguration {
     }
 
     public void formatOutputContentFont() {
-        output = new String[VirusCharacter.HEIGHT];
+        output = new String[DEFAULT_CHARACTER_HEIGHT];
 
         InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv");
 
         for (int h = 0; h < output.length; h ++) {
             String longLine = "";
             int spaceCount = 0;
-            boolean previousIsBlank = false;
+//            boolean previousIsBlank = false;
             for (VirusCharacter virusCharacter : virusCharacters) {
 
                 int length = virusCharacter.getGridSquares().length;
@@ -112,7 +115,7 @@ public class InputConfiguration {
                     longLine += output;
                 }
 
-                longLine += "B";
+                longLine += BLANK_SQUARE_CODE;
                 if (virusCharacter.getCharacter() == ' ') {
                     longLine += " ";
                     spaceCount++;

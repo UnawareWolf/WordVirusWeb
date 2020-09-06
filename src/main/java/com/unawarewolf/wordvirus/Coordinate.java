@@ -17,11 +17,7 @@ public class Coordinate {
         return y;
     }
 
-//    public int[] toIntArray() {
-//        return new int[] {x, y};
-//    }
-
-    public boolean equals(Coordinate comparisonCo) {
-        return comparisonCo.getX() == x && comparisonCo.getY() == y;
+    public boolean equals(Coordinate coordinatesToCompare) {
+        return coordinatesToCompare.getX() == x && coordinatesToCompare.getY() == y;
     }
 }

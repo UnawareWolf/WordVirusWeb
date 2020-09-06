@@ -35,7 +35,7 @@
         </tr>
     </table>
 
-    <p><a class="bold">First infected character: </a><input type="text" th:field="*{initiallyInfected}"/></p>
+    <p><a class="bold">First infected character: </a><input required minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/></p>
 
     <p><a class="bold">Font size: </a><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></p>
 
@@ -51,6 +51,9 @@
         </li>
         <li th:if="${#fields.hasErrors('fontSize')}">
             Font size must be a non-null, integer value greater than or equal to 12.
+        </li>
+        <li th:if="${#fields.hasErrors('fontSize')}">
+            First infected character must be a single character.
         </li>
     </ul>
     </p>

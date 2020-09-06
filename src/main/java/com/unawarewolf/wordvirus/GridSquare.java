@@ -1,6 +1,5 @@
 package com.unawarewolf.wordvirus;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
@@ -15,9 +14,8 @@ public class GridSquare {
     private int infectionLevel;
     private boolean hasAntibodies, immune, dead;
     private boolean firstInfected;
-    private boolean inRecovery, hasRelapsed, inSecondRecovery;
+    private boolean inRecovery, relapsed, inSecondRecovery;
     private boolean blankSquare;
-//    private int[] coordinates;
     private Coordinate coordinates;
     private int width;
 
@@ -29,11 +27,11 @@ public class GridSquare {
         fontCode = gridSquare.getFontCode();
         infectionLevel = gridSquare.getInfectionLevel();
         immune = gridSquare.isImmune();
-        hasAntibodies = gridSquare.getHasAntibodies();
+        hasAntibodies = gridSquare.hasAntibodies();
 //        this.gridMap = gridSquare.getGridMap();
-        inRecovery = gridSquare.getInRecovery();
-        hasRelapsed = gridSquare.getHasRelapsed();
-        inSecondRecovery = gridSquare.getInSecondRecovery();
+        inRecovery = gridSquare.isInRecovery();
+        relapsed = gridSquare.isInRelapse();
+        inSecondRecovery = gridSquare.isInSecondRecovery();
         blankSquare = gridSquare.isBlankSquare();
         width = gridSquare.getWidth();
 //        infectionDuration = gridSquare.getInfectionDuration() + 1;
@@ -87,7 +85,7 @@ public class GridSquare {
             firstInfected = false;
         }
         inRecovery = false;
-        hasRelapsed = false;
+        relapsed = false;
         inSecondRecovery = false;
         immune = false;
 //        infectionDuration = 0;
@@ -202,7 +200,7 @@ public class GridSquare {
         if (!inRecovery) {
             inRecovery = true;
         }
-        else if (hasRelapsed) {
+        else if (relapsed) {
             inSecondRecovery = true;
         }
     }
@@ -219,23 +217,23 @@ public class GridSquare {
         return immune;
     }
 
-    public boolean getHasAntibodies() {
+    public boolean hasAntibodies() {
         return hasAntibodies;
     }
 
-    public boolean getIsInfected() {
+    public boolean isInfected() {
         return infectionLevel > 0 && infectionLevel < 5;
     }
 
-    public boolean getInRecovery() {
+    public boolean isInRecovery() {
         return inRecovery;
     }
 
-    public boolean getHasRelapsed() {
-        return hasRelapsed;
+    public boolean isInRelapse() {
+        return relapsed;
     }
 
-    public boolean getInSecondRecovery() {
+    public boolean isInSecondRecovery() {
         return inSecondRecovery;
     }
 
@@ -259,8 +257,8 @@ public class GridSquare {
         infectionLevel--;
     }
 
-    public void setHasRelapsed(boolean hasRelapsed) {
-        this.hasRelapsed = hasRelapsed;
+    public void setRelapsed(boolean relapsed) {
+        this.relapsed = relapsed;
     }
 
     public boolean isBlankSquare() {
@@ -286,7 +284,6 @@ public class GridSquare {
     public boolean isDead() {
         return dead;
     }
-
 
     private Map<String, Double> getParameterMap() {
         return parameterMap;
