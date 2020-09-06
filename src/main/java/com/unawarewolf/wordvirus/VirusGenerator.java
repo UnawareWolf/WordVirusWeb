@@ -22,7 +22,7 @@ public class VirusGenerator {
     private static final char DEFAULT_INITIALLY_INFECTED = 'e';
     public static final String BLANK_SQUARE_CODE = "B";
 
-    private static final int DEFAULT_FONT_SIZE = 72;
+    private static final int DEFAULT_FONT_SIZE = 120;
 
     @NotNull
     private double infectionLow, infectionHigh, progressionLow, progressionHigh,
