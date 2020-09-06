@@ -8,16 +8,6 @@ public class GridSquare {
 
     public static final int MAX_INFECTION_LEVEL = 4;
 
-//    private static final double LOW_LEVEL_INFECTION_RATE = 0.03;
-//    private static final double HIGH_LEVEL_INFECTION_RATE = 0.14;
-//    private static final double LOW_LEVEL_PROGRESSION_RATE = 0.1;
-//    private static final double HIGH_LEVEL_PROGRESSION_RATE = 0.09;
-//    private static final double LOW_LEVEL_RECOVERY_RATE = 0.2;
-//    private static final double HIGH_LEVEL_RECOVERY_RATE = 0.36;
-
-//    private int infectionDuration;
-//    private double infectionRateLow, infectionRateHigh;
-
     private Map<String, Double> parameterMap;
 
     private char character;
@@ -77,15 +67,15 @@ public class GridSquare {
 //
 //    }
 
-    public GridSquare(GridVirusCharacter gridVirusCharacter, int[] coordinates, String fontCode) {
-        this.parameterMap = gridVirusCharacter.getParameterMap();
-        this.character = gridVirusCharacter.getCharacter();
+    public GridSquare(VirusCharacter virusCharacter, int[] coordinates, String fontCode) {
+        this.parameterMap = virusCharacter.getParameterMap();
+        character = virusCharacter.getCharacter();
         this.fontCode = fontCode;
 //        this.gridVirusCharacter = gridVirusCharacter;
         this.coordinates = coordinates;
-        this.blankSquare = (fontCode == "B");
-        this.width = gridVirusCharacter.getWidth();
-        if (gridVirusCharacter.getFirstInfected() && Arrays.equals(coordinates, gridVirusCharacter.getInitialSquareInfected())) {
+        blankSquare = (fontCode == "B");
+        width = virusCharacter.getWidth();
+        if (virusCharacter.getFirstInfected() && Arrays.equals(coordinates, virusCharacter.getInitialSquareInfected())) {
             infectionLevel = 1;
             hasAntibodies = true;
             firstInfected = true;
@@ -116,7 +106,7 @@ public class GridSquare {
 ////        gridMap.put(coordinates, this);
 //    }
 
-        public void update() {
+    public void update() {
 
         giveAntibodiesIfInfected();
 
@@ -125,7 +115,7 @@ public class GridSquare {
         giveImmunityIfRecovered();
     }
 
-    private void updateInfectionLevel(GridVirusCharacter previousCharacter) {
+    private void updateInfectionLevel(VirusCharacter previousCharacter) {
 //        if (infectionLevel < MAX_INFECTION_LEVEL && !immune && !firstInfected) {
 //            if (catchesInfection(previousCharacter) || infectionProgresses()) {
 //                infectionLevel++;
@@ -158,7 +148,7 @@ public class GridSquare {
         }
     }
 
-    private boolean previousCharacterIsLetter(GridVirusCharacter previousCharacter) {
+    private boolean previousCharacterIsLetter(VirusCharacter previousCharacter) {
         return previousCharacter.getCharacter() != ' ';
 //        && previousCharacter.getCharacter() != ',' && previousCharacter.getCharacter() != '.' && previousCharacter.getCharacter() != '!';
     }

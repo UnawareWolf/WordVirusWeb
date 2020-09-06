@@ -1,201 +1,285 @@
 package com.unawarewolf.wordvirus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class VirusCharacter {
 
-    public static final int MAX_INFECTION_LEVEL = 5;
+    public static final int WIDTH = 12;
+    public static final int HEIGHT = 12;
 
-    private static final double LOW_LEVEL_INFECTION_RATE = 0.1;
-    private static final double HIGH_LEVEL_INFECTION_RATE = 0.8;
-    private static final double LOW_LEVEL_PROGRESSION_RATE = 0.4;
-    private static final double HIGH_LEVEL_PROGRESSION_RATE = 0.06;
-    private static final double LOW_LEVEL_RECOVERY_RATE = 0.14;
-    private static final double HIGH_LEVEL_RECOVERY_RATE = 0.4;
+    private static final char INITIAL_CHAR_INFECTED = 'a';
+    private static final int[] INITIAL_SQUARE_INFECTED = new int[] {0, 4};
 
-    private static final char INITIAL_INFECTED = 'e';
+    private int[] initialSquareInfected;
 
     private char character;
-    private int infectionLevel;
-    private boolean hasAntibodies, immune, dead;
     private boolean firstInfected;
-    private boolean inRecovery, hasRelapsed, inSecondRecovery;
+    private GridSquare[][] gridSquares;
+    private GridSquare[][] duplicateSquares;
+    private int width, height;
+
+    private Map<String, Double> parameterMap;
+
     private Map<Character, VirusCharacter> characterMap; // Same map for all virus characters.
 
     private Random rand;
 
-    public VirusCharacter(char character, Map<Character, VirusCharacter> characterMap) {
+    public VirusCharacter(char character, Map<Character, VirusCharacter> characterMap, Map<String, Double> parameterMap, char initiallyInfected) {
+        this.parameterMap = parameterMap;
         this.character = character;
         this.characterMap = characterMap;
-        if (character == INITIAL_INFECTED) {
-            infectionLevel = 1;
-            hasAntibodies = true;
-            firstInfected = true;
-        }
-        else {
-            infectionLevel = 0;
-            hasAntibodies = false;
-            firstInfected = false;
-        }
-        inRecovery = false;
-        hasRelapsed = false;
-        inSecondRecovery = false;
-        immune = false;
         rand = new Random();
+        firstInfected = (character == initiallyInfected);
+        initialiseGridSquares();
     }
 
     public VirusCharacter(VirusCharacter virusCharacter) {
+        parameterMap = virusCharacter.getParameterMap();
         character = virusCharacter.getCharacter();
-        infectionLevel = virusCharacter.getInfectionLevel();
-        immune = virusCharacter.isImmune();
-        hasAntibodies = virusCharacter.getHasAntibodies();
-        this.characterMap = virusCharacter.getCharacterMap();
-        inRecovery = virusCharacter.getInRecovery();
-        hasRelapsed = virusCharacter.getHasRelapsed();
-        inSecondRecovery = virusCharacter.getInSecondRecovery();
+        characterMap = virusCharacter.getCharacterMap();
+        gridSquares = copyGridSquares(virusCharacter.getGridSquares());
+        width = virusCharacter.getWidth();
+        height = virusCharacter.getHeight();
         rand = new Random();
         firstInfected = false;
     }
 
-    public void update(VirusCharacter previousCharacter) {
-        updateInfectionLevel(previousCharacter);
+    private void initialiseGridSquares() {
+        List<String[]> csvData = getCharacterCSVData();
+        setInitialSquareInfected();
+        if (csvData.size() > 0) {
+            width = csvData.get(0).length;
+            height = csvData.size();
+            gridSquares = new GridSquare[width][height];
 
-        giveAntibodiesIfInfected();
+            int xCount = 0;
+            int yCount = 0;
 
-        giveDeathIfMaxInfectionLevel();
+            for (String[] csvRow : csvData) {
 
-        giveImmunityIfRecovered();
+                for (String csvCell : csvRow) {
+
+                    int[] coordinates = new int[] {xCount, yCount};
+                    gridSquares[xCount][yCount] = new GridSquare(this, coordinates, csvCell);
+                    xCount++;
+                }
+
+                xCount = 0;
+                yCount++;
+            }
+        }
+        else {
+            width = WIDTH;
+            height = HEIGHT;
+            gridSquares = new GridSquare[WIDTH][HEIGHT];
+            for (int i = 0; i < WIDTH; i++) {
+                for (int j = 0; j < HEIGHT; j++) {
+                    int[] coordinates = new int[] {i, j};
+                    gridSquares[i][j] = new GridSquare(this, coordinates, "B");
+                }
+            }
+        }
+    }
+
+    private GridSquare[][] copyGridSquares(GridSquare[][] gridSquares) {
+//        this.gridSquares = new GridSquare[WIDTH][HEIGHT];
+        GridSquare[][] newGridSquares = new GridSquare[gridSquares.length][gridSquares[0].length];
+        for (GridSquare[] gridSquareRow : gridSquares) {
+            for (GridSquare gridSquare : gridSquareRow) {
+//                this.gridSquares[gridSquare.getXCoordinate()][gridSquare.getYCoordinate()] = new GridSquare(gridSquare);
+                newGridSquares[gridSquare.getXCoordinate()][gridSquare.getYCoordinate()] = new GridSquare(gridSquare);
+
+
+            }
+        }
+        return newGridSquares;
+    }
+
+    public void update(List<VirusCharacter> virusCharacters) {
+
+        updateInfectionLevels(virusCharacters);
 
         characterMap.put(character, this);
     }
 
-    private void updateInfectionLevel(VirusCharacter previousCharacter) {
-        if (infectionLevel < MAX_INFECTION_LEVEL && !immune && !firstInfected) {
-            if (catchesInfection(previousCharacter) || infectionProgresses()) {
-                infectionLevel++;
-                if (inRecovery) {
-                    hasRelapsed = true;
+    private void updateInfectionLevels(List<VirusCharacter> virusCharacters) {
+        duplicateSquares = copyGridSquares(gridSquares);
+        for (GridSquare[] gridSquareRow : gridSquares) {
+            for (GridSquare gridSquare : gridSquareRow) {
+                updateInfectionLevel(gridSquare, virusCharacters);
+                gridSquare.update();
+            }
+        }
+    }
+
+    private void updateInfectionLevel(GridSquare gridSquare, List<VirusCharacter> virusCharacters) {
+//        boolean levelHasIncreased = increaseLevelIfCatchesInfection(gridSquare, previousCharacter);
+        if (gridSquare.getInfectionLevel() < GridSquare.MAX_INFECTION_LEVEL && !gridSquare.isImmune() && !firstInfected) {
+            if (increaseLevelIfCatchesInfection(gridSquare, virusCharacters) || gridSquare.infectionProgresses()) {
+                gridSquare.increaseInfectionLevel();
+                if (gridSquare.getInRecovery()) {
+                    gridSquare.setHasRelapsed(true);
+                }
+            } else if (gridSquare.infectionRecovers()) {
+                gridSquare.decreaseInfectionLevel();
+                gridSquare.setRecoveryCondition();
+            }
+        }
+
+    }
+
+    private boolean increaseLevelIfCatchesInfection(GridSquare gridSquare, List<VirusCharacter> virusCharacters) {
+        for (GridSquare[] gridSquareRows : duplicateSquares) {
+            for (GridSquare secondSquare : gridSquareRows) {
+                if (gridSquare.getInfectionLevel() == 0 && catchesInfection(gridSquare, secondSquare, 0)) {
+                    return true;
                 }
             }
-            else if (infectionRecovers()) {
-                infectionLevel--;
-                setRecoveryCondition();
+        }
+
+        int countFromEnd = 0;
+        VirusCharacter previousCharacter = null;
+        int offsetSquares = 0;
+        while (pastSquareCannotTransmit(virusCharacters, countFromEnd) || (virusCharacters.size() > countFromEnd + 1 && countFromEnd == 0)) {
+            previousCharacter = virusCharacters.get(virusCharacters.size() - 1 - countFromEnd);
+            offsetSquares += previousCharacter.getWidth() + 1;
+            countFromEnd++;
+        }
+
+        if (previousCharacter != null) {
+            for (GridSquare[] previousSquareRows : previousCharacter.getGridSquares()) {
+                for (GridSquare previousSquare : previousSquareRows) {
+                    if (gridSquare.getInfectionLevel() == 0 && catchesInfection(gridSquare, previousSquare, offsetSquares)) {
+                        return true;
+                    }
+                }
             }
         }
+
+//        if (gridVirusCharacters.size() > 2) {
+//
+//            GridVirusCharacter previousCharacter = gridVirusCharacters.get(gridVirusCharacters.size() - 1);
+//            if (!previousCharacter.getCharacter().equals(' ')) {
+//                for (GridSquare[] previousSquareRows : previousCharacter.getGridSquares()) {
+//                    for (GridSquare previousSquare : previousSquareRows) {
+//                        if (gridSquare.getInfectionLevel() == 0 && catchesInfection(gridSquare, previousSquare, previousSquare.getWidth() + 1)) {
+//                            return true;
+//                        }
+//                    }
+//                }
+//            }
+//            else {
+//                // check previous square (and one before if full stop).
+//
+//            }
+//        }
+        return false;
     }
 
-    private void giveImmunityIfRecovered() {
-        if (infectionLevel == 0 && hasAntibodies) {
-            immune = true;
-        }
-    }
-
-    private void giveDeathIfMaxInfectionLevel() {
-        if (infectionLevel == MAX_INFECTION_LEVEL) {
-            dead = true;
-        }
-    }
-
-    private void giveAntibodiesIfInfected() {
-        if (infectionLevel > 0) {
-            hasAntibodies = true;
-        }
-    }
-
-    private boolean catchesInfection(VirusCharacter previousCharacter) {
-        if (previousCharacterCanTransmit(previousCharacter) && infectionLevel == 0) {
-            if (rand.nextDouble() < getTransmissionRate(previousCharacter)) {
+    public boolean pastSquareCannotTransmit(List<VirusCharacter> virusCharacters, int countFromEnd) {
+        int listSize = virusCharacters.size();
+        if (listSize > countFromEnd + 1) {
+            char pastCharacter = virusCharacters.get(listSize - 1 - countFromEnd).getCharacter();
+            if (!Character.isLetterOrDigit(pastCharacter)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean previousCharacterCanTransmit(VirusCharacter previousCharacter) {
-        return previousCharacter != null && previousCharacter.getIsInfected() && previousCharacterIsLetter(previousCharacter);
-    }
-
-    private boolean previousCharacterIsLetter(VirusCharacter previousCharacter) {
-        return previousCharacter.getCharacter() != ' ';
-//        && previousCharacter.getCharacter() != ',' && previousCharacter.getCharacter() != '.' && previousCharacter.getCharacter() != '!';
-    }
-
-    private boolean infectionProgresses() {
-        return infectionLevel > 0 && rand.nextDouble() < calculateProgressionRate() && !inSecondRecovery;
-    }
-
-    private double calculateProgressionRate() {
-        double mCurve = (LOW_LEVEL_PROGRESSION_RATE - HIGH_LEVEL_PROGRESSION_RATE) / Math.pow(MAX_INFECTION_LEVEL - 2, 2);
-        double progressionRate = LOW_LEVEL_PROGRESSION_RATE - mCurve * Math.pow(infectionLevel - 1, 2);
-        return progressionRate;
-//        return MAX_PROGRESSION_RATE;
-    }
-
-    private boolean infectionRecovers() {
-        return infectionLevel > 0 && rand.nextDouble() < calculateRecoveryRate();
-    }
-
-    private double calculateRecoveryRate() {
-        double mCurve = (LOW_LEVEL_RECOVERY_RATE - HIGH_LEVEL_RECOVERY_RATE) / Math.pow(MAX_INFECTION_LEVEL - 2, 2);
-        double recoveryRate = LOW_LEVEL_RECOVERY_RATE - mCurve * Math.pow(infectionLevel - 1, 2);
-        return recoveryRate;
-//        return RECOVERY_RATE;
-    }
-
-    private double getTransmissionRate(VirusCharacter previousCharacter) {
-        double infectionRateDiff = HIGH_LEVEL_INFECTION_RATE - LOW_LEVEL_INFECTION_RATE;
-        double infectionLevelDiff = MAX_INFECTION_LEVEL - 2d;
-        double newInfectionRate = LOW_LEVEL_INFECTION_RATE + (Math.pow(previousCharacter.getInfectionLevel() - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
-        return  newInfectionRate;
-    }
-
-    private void setRecoveryCondition() {
-        if (!inRecovery) {
-            inRecovery = true;
+    private boolean catchesInfection(GridSquare gridSquare, GridSquare secondSquare, int offsetSquares) {
+        if (secondSquare.getIsInfected() && !secondSquare.isBlankSquare()) {
+            double xDist = gridSquare.getXCoordinate() + offsetSquares - secondSquare.getXCoordinate();
+            double yDist = gridSquare.getYCoordinate() - secondSquare.getYCoordinate();
+            double absDist = Math.pow(Math.pow(xDist, 2) + Math.pow(yDist, 2), 0.5);
+            return gridSquare.catchesInfection(secondSquare, absDist);
         }
-        else if (hasRelapsed) {
-            inSecondRecovery = true;
-        }
+        return false;
     }
 
-    public int getInfectionLevel() {
-        return infectionLevel;
+    private List<String[]> getCharacterCSVData() {
+        String filePath;
+        if (character == '.') {
+            filePath = "csv_letter_maps/point-Table 1.csv";
+        }
+        else if (character == ' ') {
+            filePath = "csv_letter_maps/space-Table 1.csv";
+        }
+        else {
+            filePath = "csv_letter_maps/";
+            if (Character.isUpperCase(character)) {
+                filePath += "caps/";
+            }
+            filePath += character + "-Table 1.csv";
+        }
+
+        return FileHelper.getCSVContent(filePath);
     }
 
     public Character getCharacter() {
         return character;
     }
 
-    public boolean isImmune() {
-        return immune;
-    }
-
-    public boolean getHasAntibodies() {
-        return hasAntibodies;
-    }
-
     public Map<Character, VirusCharacter> getCharacterMap() {
         return characterMap;
     }
 
-    public boolean getIsInfected() {
-        return infectionLevel > 0 && infectionLevel < 5;
+    public boolean getFirstInfected() {
+        return firstInfected;
     }
 
-    public boolean getInRecovery() {
-        return inRecovery;
+    public int[] getInitialSquareInfected() {
+//        return INITIAL_SQUARE_INFECTED;
+        return initialSquareInfected;
     }
 
-    public boolean getHasRelapsed() {
-        return hasRelapsed;
+    public GridSquare[][] getGridSquares() {
+        return gridSquares;
     }
 
-    public boolean getInSecondRecovery() {
-        return inSecondRecovery;
+    public List<GridSquare> getGridSquareList() {
+        List<GridSquare> gridSquareList = new ArrayList<>();
+        for (GridSquare[] gridSquareRow : gridSquares) {
+            for (GridSquare gridSquare : gridSquareRow) {
+                gridSquareList.add(gridSquare);
+            }
+        }
+        return gridSquareList;
     }
 
-    public int getTextStyle() {
-        return immune ? MAX_INFECTION_LEVEL + 1 : infectionLevel;
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Map<String, Double> getParameterMap() {
+        return parameterMap;
+    }
+
+    private void setInitialSquareInfected() {
+        List<Coordinate> possibleCoordinates = new ArrayList<>();
+        int rowCount = 0;
+        for (String[] letterRow : getCharacterCSVData()) {
+            int columnCount = 0;
+            for (String squareCode : letterRow) {
+                if (squareCode.equals("B")) {
+                    possibleCoordinates.add(new Coordinate(rowCount, columnCount));
+                }
+            }
+        }
+        Coordinate initialInfectedCoordinates = possibleCoordinates.get(rand.nextInt(possibleCoordinates.size()));
+        if (initialInfectedCoordinates != null) {
+            initialSquareInfected = possibleCoordinates.get(rand.nextInt(possibleCoordinates.size())).toIntArray();
+        }
+        else {
+            initialSquareInfected = INITIAL_SQUARE_INFECTED;
+        }
+
     }
 }

@@ -9,7 +9,7 @@ public class InfectionLevelMap {
     private Map<Character, InfectionCharacterProgression> stagesRowMap;
 
     public InfectionLevelMap(String filePath) {
-        List<String[]> content = GridMain.getCSVContent(filePath);
+        List<String[]> content = FileHelper.getCSVContent(filePath);
 
         stagesRowMap = new HashMap<>();
 
@@ -36,11 +36,9 @@ public class InfectionLevelMap {
                 infectionLevelCount++;
             }
         }
-
         public String get(int key) {
             return integerToInfectionCharacterMap.get(key);
         }
-
     }
 
 }

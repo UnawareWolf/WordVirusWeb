@@ -15,9 +15,9 @@ public class SquareDraw extends JPanel {
 
     private Graphics2D graphics2D;
 
-    private List<GridVirusCharacter> virusCharacters;
+    private List<VirusCharacter> virusCharacters;
 
-    public SquareDraw(List<GridVirusCharacter> virusCharacters) {
+    public SquareDraw(List<VirusCharacter> virusCharacters) {
         super();
         this.virusCharacters = virusCharacters;
     }
@@ -31,9 +31,9 @@ public class SquareDraw extends JPanel {
         int x = 0;
         int y = 0;
 
-        List<GridVirusCharacter> currentWord = new ArrayList<>();
+        List<VirusCharacter> currentWord = new ArrayList<>();
         int consecutiveSpaces = 0;
-        for (GridVirusCharacter virusCharacter : virusCharacters) {
+        for (VirusCharacter virusCharacter : virusCharacters) {
 //            if (virusCharacter.getCharacter() == ' ' && currentWord.size() > 0) {
 //                consecutiveSpaces++;
 //                drawCurrentWord(g2d, currentWord, x, y);
@@ -69,13 +69,13 @@ public class SquareDraw extends JPanel {
 
     }
 
-    private void drawCurrentWord(Graphics2D g2d, List<GridVirusCharacter> currentWord, int x, int y) {
-        for (GridVirusCharacter virusCharacter : currentWord) {
+    private void drawCurrentWord(Graphics2D g2d, List<VirusCharacter> currentWord, int x, int y) {
+        for (VirusCharacter virusCharacter : currentWord) {
             drawVirusCharacter(g2d, virusCharacter, x, y);
         }
     }
 
-    private void drawVirusCharacter(Graphics2D g2d, GridVirusCharacter virusCharacter, int x, int y) {
+    private void drawVirusCharacter(Graphics2D g2d, VirusCharacter virusCharacter, int x, int y) {
 
         for (GridSquare gridSquare : virusCharacter.getGridSquareList()) {
             int colour = gridSquare.getInfectionLevel() * (240 / GridSquare.MAX_INFECTION_LEVEL);

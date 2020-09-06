@@ -1,40 +1,40 @@
 package com.unawarewolf.wordvirus;
 
-import org.hibernate.validator.constraints.Range;
-
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InputConfiguration {
 
     private static final String DEFAULT_TXT = "templates/defaultText.txt";
 
-    private static final BigDecimal DEFAULT_INFECTION_LOW = new BigDecimal(0.1);
-    private static final BigDecimal DEFAULT_INFECTION_HIGH = new BigDecimal(0.6);
-    private static final BigDecimal DEFAULT_PROGRESSION_LOW = new BigDecimal(0.4);
-    private static final BigDecimal DEFAULT_PROGRESSION_HIGH = new BigDecimal(0.1);
-    private static final BigDecimal DEFAULT_RECOVERY_LOW = new BigDecimal(0.2);
-    private static final BigDecimal DEFAULT_RECOVERY_HIGH = new BigDecimal(0.4);
+    private static final double DEFAULT_INFECTION_LOW = 0.1;
+    private static final double DEFAULT_INFECTION_HIGH = 0.6;
+    private static final double DEFAULT_PROGRESSION_LOW = 0.4;
+    private static final double DEFAULT_PROGRESSION_HIGH = 0.1;
+    private static final double DEFAULT_RECOVERY_LOW = 0.2;
+    private static final double DEFAULT_RECOVERY_HIGH = 0.4;
 
-    private static final int DEFAULT_FONT_SIZE = 60;
+    private static final char DEFAULT_INITIALLY_INFECTED = 'e';
 
-    @NotNull
-    private BigDecimal infectionLow, infectionHigh;
-
-    @NotNull
-    private BigDecimal progressionLow, progressionHigh;
+    private static final int DEFAULT_FONT_SIZE = 72;
 
     @NotNull
-    private BigDecimal recoveryLow, recoveryHigh;
+    private double infectionLow, infectionHigh, progressionLow, progressionHigh,
+            recoveryLow, recoveryHigh;
+
+    private char initiallyInfected;
 
     @NotNull
     @Min(12)
     private int fontSize;
 
     private String input;
-
     private String[] output;
+
+    private List<VirusCharacter> virusCharacters;
 
     public InputConfiguration() {
         setDefaultValues();
@@ -47,16 +47,86 @@ public class InputConfiguration {
         progressionHigh = DEFAULT_PROGRESSION_HIGH;
         recoveryLow = DEFAULT_RECOVERY_LOW;
         recoveryHigh = DEFAULT_RECOVERY_HIGH;
-        input = GridMain.getFileAsString(DEFAULT_TXT);
+        input = FileHelper.getFileAsString(DEFAULT_TXT);
         fontSize = DEFAULT_FONT_SIZE;
+        initiallyInfected = DEFAULT_INITIALLY_INFECTED;
     }
 
     public void generateOutputText() {
-        char[] inputCharArray = input.toCharArray();
+        generateVirusCharacters();
+        formatOutputContentFont();
+    }
 
-        List<GridVirusCharacter> virusCharacters = GridMain.createVirusCharacterList(inputCharArray, this);
+    private void generateVirusCharacters() {
+        virusCharacters = new ArrayList<>();
+        Map<Character, VirusCharacter> characterMap = new HashMap<>();
+        Map<String, Double> parameterMap = new HashMap<>();
 
-        output = GridMain.formatOutputContentFont(virusCharacters);
+        parameterMap.put("infectionRateLow", infectionLow);
+        parameterMap.put("infectionRateHigh", infectionHigh);
+        parameterMap.put("progressionRateLow", progressionLow);
+        parameterMap.put("progressionRateHigh", progressionHigh);
+        parameterMap.put("recoveryRateLow", recoveryLow);
+        parameterMap.put("recoveryRateHigh", recoveryHigh);
+
+        for (char character : input.toCharArray()) {
+            VirusCharacter virusCharacter = createVirusCharacter(character, characterMap, parameterMap);
+            virusCharacter.update(virusCharacters);
+            virusCharacters.add(virusCharacter);
+        }
+    }
+
+    private VirusCharacter createVirusCharacter(char character, Map<Character, VirusCharacter> characterMap, Map<String, Double> parameterMap) {
+        if (useCopyConstructor(character, characterMap)) {
+            return new VirusCharacter(characterMap.get(character));
+        }
+        return new VirusCharacter(character, characterMap, parameterMap, initiallyInfected);
+    }
+
+    private boolean useCopyConstructor(char character, Map<Character, VirusCharacter> characterMap) {
+        if (characterMap.containsKey(character)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void formatOutputContentFont() {
+        output = new String[VirusCharacter.HEIGHT];
+
+        InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv");
+
+        for (int h = 0; h < output.length; h ++) {
+            String longLine = "";
+            int spaceCount = 0;
+            boolean previousIsBlank = false;
+            for (VirusCharacter virusCharacter : virusCharacters) {
+
+                int length = virusCharacter.getGridSquares().length;
+
+                for (int i = 0; i < length; i++) {
+
+                    GridSquare currentSquare = virusCharacter.getGridSquares()[i][h];
+
+                    String output = infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
+
+                    longLine += output;
+                }
+
+                longLine += "B";
+                if (virusCharacter.getCharacter() == ' ') {
+                    longLine += " ";
+                    spaceCount++;
+                }
+                else {
+                    spaceCount = 0;
+                }
+                if (spaceCount == 4) {
+                    spaceCount = 0;
+                }
+
+            }
+            output[h] = longLine;
+        }
     }
 
     public void setInput(String input) {
@@ -68,27 +138,27 @@ public class InputConfiguration {
     }
 
     public double getInfectionLow() {
-        return infectionLow.doubleValue();
+        return infectionLow;
     }
 
     public double getInfectionHigh() {
-        return infectionHigh.doubleValue();
+        return infectionHigh;
     }
 
     public double getProgressionLow() {
-        return progressionLow.doubleValue();
+        return progressionLow;
     }
 
     public double getProgressionHigh() {
-        return progressionHigh.doubleValue();
+        return progressionHigh;
     }
 
     public double getRecoveryLow() {
-        return recoveryLow.doubleValue();
+        return recoveryLow;
     }
 
     public double getRecoveryHigh() {
-        return recoveryHigh.doubleValue();
+        return recoveryHigh;
     }
 
     public int getFontSize() {
@@ -99,28 +169,32 @@ public class InputConfiguration {
         return output;
     }
 
+    public char getInitiallyInfected() {
+        return initiallyInfected;
+    }
+
     public void setInfectionLow(double infectionLow) {
-        this.infectionLow = new BigDecimal(infectionLow);
+        this.infectionLow = infectionLow;
     }
 
     public void setInfectionHigh(double infectionHigh) {
-        this.infectionHigh = new BigDecimal(infectionHigh);
+        this.infectionHigh = infectionHigh;
     }
 
     public void setProgressionLow(double progressionLow) {
-        this.progressionLow = new BigDecimal(progressionLow);
+        this.progressionLow = progressionLow;
     }
 
     public void setProgressionHigh(double progressionHigh) {
-        this.progressionHigh = new BigDecimal(progressionHigh);
+        this.progressionHigh = progressionHigh;
     }
 
     public void setRecoveryLow(double recoveryLow ) {
-        this.recoveryLow = new BigDecimal(recoveryLow);
+        this.recoveryLow = recoveryLow;
     }
 
     public void setRecoveryHigh(double recoveryHigh) {
-        this.recoveryHigh = new BigDecimal(recoveryHigh);
+        this.recoveryHigh = recoveryHigh;
     }
 
     public void setOutput(String[] output) {
@@ -129,6 +203,10 @@ public class InputConfiguration {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
+    }
+
+    public void setInitiallyInfected(char initiallyInfected) {
+        this.initiallyInfected = initiallyInfected;
     }
 
 }

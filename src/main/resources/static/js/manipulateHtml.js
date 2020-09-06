@@ -26,5 +26,5 @@ function getMiniFontSize(fontSize, minFontSize) {
     }
     var remainder = fontSize % minFontSize;
     fontSize = (fontSize - remainder) / minFontSize;
-    return fontSize;
+    return Math.round(fontSize);
 }
