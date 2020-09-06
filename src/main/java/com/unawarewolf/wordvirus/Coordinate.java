@@ -17,16 +17,11 @@ public class Coordinate {
         return y;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+//    public int[] toIntArray() {
+//        return new int[] {x, y};
+//    }
 
-    public void setY(int y) {
-        this.y = y;
+    public boolean equals(Coordinate comparisonCo) {
+        return comparisonCo.getX() == x && comparisonCo.getY() == y;
     }
-
-    public int[] toIntArray() {
-        return new int[] {x, y};
-    }
-
 }

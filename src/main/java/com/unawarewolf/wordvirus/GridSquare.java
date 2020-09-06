@@ -17,7 +17,8 @@ public class GridSquare {
     private boolean firstInfected;
     private boolean inRecovery, hasRelapsed, inSecondRecovery;
     private boolean blankSquare;
-    private int[] coordinates;
+//    private int[] coordinates;
+    private Coordinate coordinates;
     private int width;
 
     private Random rand;
@@ -67,7 +68,7 @@ public class GridSquare {
 //
 //    }
 
-    public GridSquare(VirusCharacter virusCharacter, int[] coordinates, String fontCode) {
+    public GridSquare(VirusCharacter virusCharacter, Coordinate coordinates, String fontCode) {
         this.parameterMap = virusCharacter.getParameterMap();
         character = virusCharacter.getCharacter();
         this.fontCode = fontCode;
@@ -75,7 +76,7 @@ public class GridSquare {
         this.coordinates = coordinates;
         blankSquare = (fontCode == "B");
         width = virusCharacter.getWidth();
-        if (virusCharacter.getFirstInfected() && Arrays.equals(coordinates, virusCharacter.getInitialSquareInfected())) {
+        if (virusCharacter.getFirstInfected() && coordinates.equals(virusCharacter.getInitialSquareInfected())) {
             infectionLevel = 1;
             hasAntibodies = true;
             firstInfected = true;
@@ -179,14 +180,21 @@ public class GridSquare {
         return recoveryRate;
     }
 
-    private double getTransmissionRate(GridSquare infectedSquare) {
-//        double infectionRateDiff = HIGH_LEVEL_INFECTION_RATE - LOW_LEVEL_INFECTION_RATE;
+//    private double getTransmissionRate(GridSquare infectedSquare) {
+////        double infectionRateDiff = HIGH_LEVEL_INFECTION_RATE - LOW_LEVEL_INFECTION_RATE;
+////        double infectionLevelDiff = MAX_INFECTION_LEVEL - 2d;
+////        double newInfectionRate = LOW_LEVEL_INFECTION_RATE + (Math.pow(infectedSquare.getInfectionLevel() - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
+////        return  newInfectionRate;
+//        double infectionRateDiff = parameterMap.get("infectionRateHigh") - parameterMap.get("infectionRateLow");
 //        double infectionLevelDiff = MAX_INFECTION_LEVEL - 2d;
-//        double newInfectionRate = LOW_LEVEL_INFECTION_RATE + (Math.pow(infectedSquare.getInfectionLevel() - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
+//        double newInfectionRate = parameterMap.get("infectionRateLow") + (Math.pow(infectedSquare.getInfectionLevel() - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
 //        return  newInfectionRate;
+//    }
+
+    public double getTransmissionRate() {
         double infectionRateDiff = parameterMap.get("infectionRateHigh") - parameterMap.get("infectionRateLow");
         double infectionLevelDiff = MAX_INFECTION_LEVEL - 2d;
-        double newInfectionRate = parameterMap.get("infectionRateLow") + (Math.pow(infectedSquare.getInfectionLevel() - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
+        double newInfectionRate = parameterMap.get("infectionRateLow") + (Math.pow(infectionLevel - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
         return  newInfectionRate;
     }
 
@@ -232,14 +240,14 @@ public class GridSquare {
     }
 
     public int getXCoordinate() {
-        return coordinates[0];
+        return coordinates.getX();
     }
 
     public int getYCoordinate() {
-        return coordinates[1];
+        return coordinates.getY();
     }
 
-    public int[] getCoordinates() {
+    public Coordinate getCoordinates() {
         return coordinates;
     }
 
@@ -264,7 +272,8 @@ public class GridSquare {
     }
 
     public boolean catchesInfection(GridSquare infectedSquare, double absDist) {
-        if (rand.nextDouble() < getTransmissionRate(infectedSquare) / absDist) {
+//        if (rand.nextDouble() < getTransmissionRate(infectedSquare) / absDist) {
+        if (rand.nextDouble() < infectedSquare.getTransmissionRate() / absDist) {
                 return true;
         }
         return false;
