@@ -12,7 +12,7 @@ import javax.validation.Valid;
 @Controller
 public class InputController {
 
-    private InputConfiguration inputConfiguration;
+    private VirusGenerator virusGenerator;
 
     @GetMapping("/")
     public String virusForm(Model model) {
@@ -20,30 +20,30 @@ public class InputController {
     }
 
     @PostMapping(value="/", params="action=Generate")
-    public String generateOutput(@Valid @ModelAttribute("inputConfiguration") InputConfiguration inputConfiguration,
+    public String generateOutput(@Valid @ModelAttribute("virusGenerator") VirusGenerator virusGenerator,
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "configure";
         }
 
-        inputConfiguration.generateOutputText();
+        virusGenerator.generateOutputText();
 
-        this.inputConfiguration = inputConfiguration;
+        this.virusGenerator = virusGenerator;
 
-        model.addAttribute("inputConfiguration", inputConfiguration);
+        model.addAttribute("virusGenerator", virusGenerator);
         return "result";
     }
 
     @PostMapping(value="/", params="action=Regenerate")
     public String regenerateOutput(Model model) {
         try {
-            inputConfiguration.generateOutputText();
+            virusGenerator.generateOutputText();
         }
         catch (Exception e) {
             return resetFormToDefault(model);
         }
 
-        model.addAttribute("inputConfiguration", inputConfiguration);
+        model.addAttribute("virusGenerator", virusGenerator);
         return "result";
     }
 
@@ -55,7 +55,7 @@ public class InputController {
     @PostMapping(value="/", params="action=Back")
     public String backToForm(Model model) {
         try{
-            model.addAttribute("inputConfiguration", inputConfiguration);
+            model.addAttribute("virusGenerator", virusGenerator);
         }
         catch (Exception e) {
             return resetFormToDefault(model);
@@ -64,8 +64,8 @@ public class InputController {
     }
 
     private String resetFormToDefault(Model model) {
-        inputConfiguration = new InputConfiguration();
-        model.addAttribute("inputConfiguration", inputConfiguration);
+        virusGenerator = new VirusGenerator();
+        model.addAttribute("virusGenerator", virusGenerator);
         return "configure";
     }
 

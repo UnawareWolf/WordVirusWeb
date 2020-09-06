@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InputConfiguration {
+public class VirusGenerator {
 
     public static final int DEFAULT_CHARACTER_HEIGHT = 12;
 
@@ -39,7 +39,7 @@ public class InputConfiguration {
 
     private List<VirusCharacter> virusCharacters;
 
-    public InputConfiguration() {
+    public VirusGenerator() {
         setDefaultValues();
     }
 

@@ -227,7 +227,7 @@ public class VirusCharacter {
         for (String[] letterRow : getCharacterCSVData()) {
             int columnCount = 0;
             for (String squareCode : letterRow) {
-                if (squareCode.equals(InputConfiguration.BLANK_SQUARE_CODE)) {
+                if (squareCode.equals(VirusGenerator.BLANK_SQUARE_CODE)) {
                     possibleCoordinates.add(new Coordinate(rowCount, columnCount));
                 }
             }
