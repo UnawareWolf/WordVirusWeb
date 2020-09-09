@@ -40,7 +40,7 @@ public class VirusGenerator {
         if (useCopyConstructor(character, characterMap)) {
             return new VirusCharacter(characterMap.get(character));
         }
-        return new VirusCharacter(character, characterMap, inputConfiguration);
+        return new VirusCharacter(this, character);
     }
 
     private boolean useCopyConstructor(char character, Map<Character, VirusCharacter> characterMap) {
@@ -79,6 +79,14 @@ public class VirusGenerator {
 
     public void setInputConfiguration(InputConfiguration inputConfiguration) {
         this.inputConfiguration = inputConfiguration;
+    }
+
+    public InputConfiguration getInputConfiguration() {
+        return inputConfiguration;
+    }
+
+    public Map<Character, VirusCharacter> getCharacterMap() {
+        return characterMap;
     }
 
 }

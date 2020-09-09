@@ -18,23 +18,6 @@ public class GridSquare {
 
     private InputConfiguration inputConfiguration;
 
-    public GridSquare(GridSquare gridSquare) {
-        inputConfiguration = gridSquare.getInputConfiguration();
-        character = gridSquare.getCharacter();
-        fontCode = gridSquare.getFontCode();
-        infectionLevel = gridSquare.getInfectionLevel();
-        immune = gridSquare.isImmune();
-        hasAntibodies = gridSquare.hasAntibodies();
-        inRecovery = gridSquare.isInRecovery();
-        relapsed = gridSquare.isInRelapse();
-        inSecondRecovery = gridSquare.isInSecondRecovery();
-        blankSquare = gridSquare.isBlankSquare();
-        width = gridSquare.getWidth();
-        rand = new Random();
-        firstInfected = false;
-        coordinates = gridSquare.getCoordinates();
-    }
-
     public GridSquare(VirusCharacter virusCharacter, Coordinate coordinates, String fontCode) {
         inputConfiguration = virusCharacter.getInputConfiguration();
         character = virusCharacter.getCharacter();
@@ -57,6 +40,23 @@ public class GridSquare {
         inSecondRecovery = false;
         immune = false;
         rand = new Random();
+    }
+
+    public GridSquare(GridSquare gridSquare) {
+        inputConfiguration = gridSquare.getInputConfiguration();
+        character = gridSquare.getCharacter();
+        fontCode = gridSquare.getFontCode();
+        infectionLevel = gridSquare.getInfectionLevel();
+        immune = gridSquare.isImmune();
+        hasAntibodies = gridSquare.hasAntibodies();
+        inRecovery = gridSquare.isInRecovery();
+        relapsed = gridSquare.isInRelapse();
+        inSecondRecovery = gridSquare.isInSecondRecovery();
+        blankSquare = gridSquare.isBlankSquare();
+        width = gridSquare.getWidth();
+        rand = new Random();
+        firstInfected = false;
+        coordinates = gridSquare.getCoordinates();
     }
 
     public void update() {
