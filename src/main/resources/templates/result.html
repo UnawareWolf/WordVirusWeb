@@ -12,15 +12,17 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var content = /*[[${virusGenerator.output}]]*/;
-    var fontSize = /*[[${virusGenerator.fontSize}]]*/;
+
+    var content = /*[[${inputConfiguration.output}]]*/;
+    var fontSize = /*[[${inputConfiguration.fontSize}]]*/;
 
     setUpLayerStyles(content.length, getMiniFontSize(fontSize, content.length));
 
     populateLayers(content);
+
     /*]]>*/
 </script>
-<form action="#" th:action="@{/}" th:object="${virusGenerator}" method="post">
+<form action="#" th:action="@{/}" th:object="${inputConfiguration}" method="post">
     <p class="frontLayer"><input type="submit" name="action" value="Regenerate"/> <input type="submit" name="action" value="Back"/></p>
 </form>
 </body>

@@ -4,12 +4,13 @@
     <title>Zygoponent</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
+    <script type="text/javascript" src="/js/manipulateHtml.js"></script>
 </head>
 <body>
 
 <h1>Zygoponent</h1>
 
-<form action="#" th:action="@{/}" th:object="${virusGenerator}" method="post">
+<form action="#" name="inputForm" th:action="@{/}" th:object="${inputConfiguration}" method="post">
 
     <p><h2>Text</h2><textarea rows="20" cols="80" th:field="*{input}"></textarea></p>
 
@@ -35,7 +36,19 @@
         </tr>
     </table>
 
-    <p><a class="bold">First infected character: </a><input required minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/></p>
+    <p id="firstInfected">
+        <a class="bold">First infected character: </a><br/><br/>
+        <input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/><label for="random">Random</label> <input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/><label for="choose">Choose</label><br/><br/>
+        <input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/>
+    </p>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            setUpCharacterEntryBox(/*[[${inputConfiguration.randomInitiallyInfected}]]*/);
+            setUpCharacterSelectionRadioEventListeners();
+
+        /*]]>*/
+    </script>
 
     <p><a class="bold">Font size: </a><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></p>
 

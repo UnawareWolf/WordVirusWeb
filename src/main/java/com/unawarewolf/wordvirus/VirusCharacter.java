@@ -14,23 +14,22 @@ public class VirusCharacter {
     private GridSquare[][] gridSquares;
     private int width, height;
 
-    private Map<String, Double> parameterMap;
-
     private Map<Character, VirusCharacter> characterMap; // Same map for all virus characters.
+    private InputConfiguration inputConfiguration;
 
     private Random rand;
 
-    public VirusCharacter(char character, Map<Character, VirusCharacter> characterMap, Map<String, Double> parameterMap, char initiallyInfected) {
-        this.parameterMap = parameterMap;
+    public VirusCharacter(char character, Map<Character, VirusCharacter> characterMap, InputConfiguration inputConfiguration) {
+        this.inputConfiguration = inputConfiguration;
         this.character = character;
         this.characterMap = characterMap;
         rand = new Random();
-        firstInfected = (character == initiallyInfected);
+        firstInfected = (character == inputConfiguration.getInitiallyInfected());
         initialiseGridSquares();
     }
 
     public VirusCharacter(VirusCharacter virusCharacter) {
-        parameterMap = virusCharacter.getParameterMap();
+        inputConfiguration = virusCharacter.getInputConfiguration();
         character = virusCharacter.getCharacter();
         characterMap = virusCharacter.getCharacterMap();
         gridSquares = copyGridSquares(virusCharacter.getGridSquares());
@@ -42,7 +41,9 @@ public class VirusCharacter {
 
     private void initialiseGridSquares() {
         List<String[]> csvData = getCharacterCSVData();
-        setInitialSquareInfected();
+        if (firstInfected) {
+            setInitialSquareInfected();
+        }
         width = csvData.get(0).length;
         height = csvData.size();
         gridSquares = new GridSquare[width][height];
@@ -92,7 +93,7 @@ public class VirusCharacter {
 
     private void updateInfectionLevel(GridSquare gridSquare, List<VirusCharacter> virusCharacters) {
 
-        if (gridSquare.getInfectionLevel() < GridSquare.MAX_INFECTION_LEVEL && !gridSquare.isImmune() && !firstInfected) {
+        if (gridSquare.getInfectionLevel() < VirusGenerator.MAX_INFECTION_LEVEL && !gridSquare.isImmune() && !firstInfected) {
 
             if (increaseLevelIfCatchesInfection(gridSquare, virusCharacters) || gridSquare.infectionProgresses()) {
 
@@ -199,16 +200,6 @@ public class VirusCharacter {
         return gridSquares;
     }
 
-    public List<GridSquare> getGridSquareList() {
-        List<GridSquare> gridSquareList = new ArrayList<>();
-        for (GridSquare[] gridSquareRow : gridSquares) {
-            for (GridSquare gridSquare : gridSquareRow) {
-                gridSquareList.add(gridSquare);
-            }
-        }
-        return gridSquareList;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -217,21 +208,24 @@ public class VirusCharacter {
         return height;
     }
 
-    public Map<String, Double> getParameterMap() {
-        return parameterMap;
-    }
-
     private void setInitialSquareInfected() {
         List<Coordinate> possibleCoordinates = new ArrayList<>();
         int rowCount = 0;
         for (String[] letterRow : getCharacterCSVData()) {
             int columnCount = 0;
             for (String squareCode : letterRow) {
-                if (squareCode.equals(VirusGenerator.BLANK_SQUARE_CODE)) {
-                    possibleCoordinates.add(new Coordinate(rowCount, columnCount));
+                if (!squareCode.equals(VirusGenerator.BLANK_SQUARE_CODE)) {
+                    possibleCoordinates.add(new Coordinate(columnCount, rowCount));
                 }
+                columnCount++;
             }
+            rowCount++;
         }
         initialSquareInfected = possibleCoordinates.get(rand.nextInt(possibleCoordinates.size()));
     }
+
+    public InputConfiguration getInputConfiguration() {
+        return inputConfiguration;
+    }
+
 }

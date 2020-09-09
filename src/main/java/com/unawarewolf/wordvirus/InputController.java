@@ -12,60 +12,52 @@ import javax.validation.Valid;
 @Controller
 public class InputController {
 
+    private InputConfiguration inputConfiguration;
     private VirusGenerator virusGenerator;
 
     @GetMapping("/")
     public String virusForm(Model model) {
-        return resetFormToDefault(model);
+        return displayForm(model, true);
     }
 
     @PostMapping(value="/", params="action=Generate")
-    public String generateOutput(@Valid @ModelAttribute("virusGenerator") VirusGenerator virusGenerator,
+    public String generateButtonPress(@Valid @ModelAttribute("inputConfiguration") InputConfiguration inputConfiguration,
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "configure";
         }
+        this.inputConfiguration = inputConfiguration;
 
-        virusGenerator.generateOutputText();
-
-        this.virusGenerator = virusGenerator;
-
-        model.addAttribute("virusGenerator", virusGenerator);
-        return "result";
+        return generateAndDisplayOutput(model);
     }
 
     @PostMapping(value="/", params="action=Regenerate")
-    public String regenerateOutput(Model model) {
-        try {
-            virusGenerator.generateOutputText();
-        }
-        catch (Exception e) {
-            return resetFormToDefault(model);
-        }
-
-        model.addAttribute("virusGenerator", virusGenerator);
-        return "result";
+    public String regenerateButtonPress(Model model) {
+        return inputConfiguration != null ? generateAndDisplayOutput(model) : displayForm(model, true);
     }
 
     @PostMapping(value="/", params="action=Reset")
-    public String resetForm(Model model) {
-        return resetFormToDefault(model);
+    public String resetButtonPress(Model model) {
+        return displayForm(model, true);
     }
 
     @PostMapping(value="/", params="action=Back")
-    public String backToForm(Model model) {
-        try{
-            model.addAttribute("virusGenerator", virusGenerator);
-        }
-        catch (Exception e) {
-            return resetFormToDefault(model);
-        }
-        return "configure";
+    public String backButtonPress(Model model) {
+        return displayForm(model, inputConfiguration == null);
     }
 
-    private String resetFormToDefault(Model model) {
-        virusGenerator = new VirusGenerator();
-        model.addAttribute("virusGenerator", virusGenerator);
+    private String generateAndDisplayOutput(Model model) {
+        virusGenerator = virusGenerator == null ? new VirusGenerator(inputConfiguration) : virusGenerator;
+        virusGenerator.setInputConfiguration(inputConfiguration);
+        inputConfiguration.randomiseInitiallyInfectedIfRandomSelected();
+        inputConfiguration.setOutput(virusGenerator.generateOutputText());
+        model.addAttribute("inputConfiguration", inputConfiguration);
+        return "result";
+    }
+
+    private String displayForm(Model model, boolean reset) {
+        inputConfiguration = reset ? new InputConfiguration() : inputConfiguration;
+        model.addAttribute("inputConfiguration", inputConfiguration);
         return "configure";
     }
 
