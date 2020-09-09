@@ -40,7 +40,7 @@ public class GridSquare {
         character = virusCharacter.getCharacter();
         this.fontCode = fontCode;
         this.coordinates = coordinates;
-        blankSquare = (fontCode == VirusGenerator.BLANK_SQUARE_CODE);
+        blankSquare = (fontCode.equals(VirusGenerator.BLANK_SQUARE_CODE));
         width = virusCharacter.getWidth();
         if (virusCharacter.getFirstInfected() && coordinates.equals(virusCharacter.getInitialSquareInfected())) {
             infectionLevel = 1;
@@ -69,19 +69,19 @@ public class GridSquare {
     }
 
     private void giveImmunityIfRecovered() {
-        if (infectionLevel == 0 && hasAntibodies) {
+        if (!immune && infectionLevel == 0 && hasAntibodies) {
             immune = true;
         }
     }
 
     private void giveDeathIfMaxInfectionLevel() {
-        if (infectionLevel == VirusGenerator.MAX_INFECTION_LEVEL) {
+        if (!dead && infectionLevel == VirusGenerator.MAX_INFECTION_LEVEL) {
             dead = true;
         }
     }
 
     private void giveAntibodiesIfInfected() {
-        if (infectionLevel > 0) {
+        if (!hasAntibodies && infectionLevel > 0) {
             hasAntibodies = true;
         }
     }
@@ -139,7 +139,7 @@ public class GridSquare {
     }
 
     public boolean isInfected() {
-        return infectionLevel > 0 && infectionLevel < 5;
+        return infectionLevel > 0 && infectionLevel < VirusGenerator.MAX_INFECTION_LEVEL;
     }
 
     public boolean isInRecovery() {

@@ -151,7 +151,7 @@ public class VirusCharacter {
     }
 
     private boolean catchesInfection(GridSquare gridSquare, GridSquare secondSquare, int offsetSquares) {
-        if (secondSquare.isInfected() && !secondSquare.isBlankSquare()) {
+        if (secondSquare.isInfected() && !secondSquare.isBlankSquare() && !secondSquare.isDead()) {
             double xDist = gridSquare.getXCoordinate() + offsetSquares - secondSquare.getXCoordinate();
             double yDist = gridSquare.getYCoordinate() - secondSquare.getYCoordinate();
             double absDist = Math.pow(Math.pow(xDist, 2) + Math.pow(yDist, 2), 0.5);
