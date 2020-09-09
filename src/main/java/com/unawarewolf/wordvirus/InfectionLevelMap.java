@@ -36,6 +36,7 @@ public class InfectionLevelMap {
                 infectionLevelCount++;
             }
         }
+        
         public String get(int key) {
             return integerToInfectionCharacterMap.get(key);
         }
