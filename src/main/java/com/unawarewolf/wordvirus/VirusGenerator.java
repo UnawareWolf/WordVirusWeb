@@ -55,37 +55,24 @@ public class VirusGenerator {
 
         InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv");
 
-        for (int h = 0; h < output.length; h ++) {
-            String longLine = "";
-            int spaceCount = 0;
-//            boolean previousIsBlank = false;
+        for (int j = 0; j < output.length; j ++) {
+            String currentLayerOutput = "";
             for (VirusCharacter virusCharacter : virusCharacters) {
 
-                int length = virusCharacter.getGridSquares().length;
+                for (int i = 0; i < virusCharacter.getGridSquares().length; i++) {
 
-                for (int i = 0; i < length; i++) {
+                    GridSquare currentSquare = virusCharacter.getGridSquares()[i][j];
 
-                    GridSquare currentSquare = virusCharacter.getGridSquares()[i][h];
-
-                    String entry = infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
-
-                    longLine += entry;
+                    currentLayerOutput += infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
                 }
 
-                longLine += BLANK_SQUARE_CODE;
+                currentLayerOutput += BLANK_SQUARE_CODE;
                 if (virusCharacter.getCharacter() == ' ') {
-                    longLine += " ";
-                    spaceCount++;
-                }
-                else {
-                    spaceCount = 0;
-                }
-                if (spaceCount == 4) {
-                    spaceCount = 0;
+                    currentLayerOutput += " ";
                 }
 
             }
-            output[h] = longLine;
+            output[j] = currentLayerOutput;
         }
         return output;
     }
