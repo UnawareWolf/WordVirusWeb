@@ -92,8 +92,7 @@ public class GridSquare {
 
     private double calculateProgressionRate() {
         double mCurve = (inputConfiguration.getProgressionLow() - inputConfiguration.getProgressionHigh()) / Math.pow(VirusGenerator.MAX_INFECTION_LEVEL - 2, 2);
-        double progressionRate = inputConfiguration.getProgressionLow() - mCurve * Math.pow(infectionLevel - 1, 2);
-        return progressionRate;
+        return inputConfiguration.getProgressionLow() - mCurve * Math.pow(infectionLevel - 1, 2);
     }
 
     public boolean infectionRecovers() {
@@ -102,15 +101,13 @@ public class GridSquare {
 
     private double calculateRecoveryRate() {
         double mCurve = (inputConfiguration.getRecoveryLow() - inputConfiguration.getRecoveryHigh()) / Math.pow(VirusGenerator.MAX_INFECTION_LEVEL - 2, 2);
-        double recoveryRate = inputConfiguration.getRecoveryLow() - mCurve * Math.pow(infectionLevel - 1, 2);
-        return recoveryRate;
+        return inputConfiguration.getRecoveryLow() - mCurve * Math.pow(infectionLevel - 1, 2);
     }
 
     public double getTransmissionRate() {
         double infectionRateDiff = inputConfiguration.getProgressionHigh() - inputConfiguration.getProgressionLow();
         double infectionLevelDiff = VirusGenerator.MAX_INFECTION_LEVEL - 2d;
-        double newInfectionRate = inputConfiguration.getProgressionLow() + (Math.pow(infectionLevel - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
-        return  newInfectionRate;
+        return inputConfiguration.getProgressionLow() + (Math.pow(infectionLevel - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
     }
 
     public void setRecoveryCondition() {
@@ -192,10 +189,6 @@ public class GridSquare {
 
     public String getFontCode() {
         return fontCode;
-    }
-
-    public boolean isDead() {
-        return dead;
     }
 
     public InputConfiguration getInputConfiguration() {

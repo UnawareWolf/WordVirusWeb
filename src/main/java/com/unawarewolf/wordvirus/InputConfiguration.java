@@ -145,7 +145,7 @@ public class InputConfiguration {
 
     public void randomiseInitiallyInfectedIfRandomSelected() {
         if (randomInitiallyInfected) {
-            Set<Character> inputCharacters = new LinkedHashSet<>();
+            Set<Character> inputCharacters = new HashSet<>();
             for (char inputChar : input.toCharArray()) {
                 inputCharacters.add(inputChar);
             }
