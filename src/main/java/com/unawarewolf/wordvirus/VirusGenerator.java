@@ -37,17 +37,8 @@ public class VirusGenerator {
     }
 
     private VirusCharacter createVirusCharacter(char character) {
-        if (useCopyConstructor(character, characterMap)) {
-            return new VirusCharacter(characterMap.get(character));
-        }
-        return new VirusCharacter(this, character);
-    }
-
-    private boolean useCopyConstructor(char character, Map<Character, VirusCharacter> characterMap) {
-        if (characterMap.containsKey(character)) {
-            return true;
-        }
-        return false;
+        return characterMap.containsKey(character) ? new VirusCharacter(characterMap.get(character)) :
+                new VirusCharacter(this, character);
     }
 
     public String[] formatOutputContentFont() {
