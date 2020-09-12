@@ -105,9 +105,9 @@ public class GridSquare {
     }
 
     public double getTransmissionRate() {
-        double infectionRateDiff = inputConfiguration.getProgressionHigh() - inputConfiguration.getProgressionLow();
+        double infectionRateDiff = inputConfiguration.getInfectionHigh() - inputConfiguration.getInfectionLow();
         double infectionLevelDiff = VirusGenerator.MAX_INFECTION_LEVEL - 2d;
-        return inputConfiguration.getProgressionLow() + (Math.pow(infectionLevel - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
+        return inputConfiguration.getInfectionLow() + (Math.pow(infectionLevel - 1d, 2) * infectionRateDiff / Math.pow(infectionLevelDiff, 2));
     }
 
     public void setRecoveryCondition() {
@@ -184,7 +184,8 @@ public class GridSquare {
     }
 
     public boolean catchesInfection(GridSquare infectedSquare, double absDist) {
-        return rand.nextDouble() < infectedSquare.getTransmissionRate() / absDist;
+        double transmissionRate = infectedSquare.getTransmissionRate();
+        return rand.nextDouble() < transmissionRate / absDist;
     }
 
     public String getFontCode() {

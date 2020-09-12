@@ -113,39 +113,51 @@ public class VirusCharacter {
 
         PreviousCharacter previousCharacter = getNearestCharacterThatCanTransmit(previousCharacters, 0, 0);
 
-        if (previousCharacter != null) {
-            for (GridSquare[] gridSquareRows : previousCharacter.getVirusCharacter().getGridSquares()) {
-                for (GridSquare previousSquare : gridSquareRows) {
-                    if (gridSquare.getInfectionLevel() == 0 && catchesInfection(gridSquare, previousSquare, previousCharacter.getOffsetSquares())) {
-                        return true;
-                    }
+        return catchesInfectionFromWithinCharacter(gridSquare) || catchesInfectionFromPreviousCharacter(gridSquare, previousCharacter);
+    }
+
+    private boolean catchesInfectionFromWithinCharacter(GridSquare gridSquare) {
+        return catchesInfectionFromCharacter(gridSquare, this, 0);
+    }
+
+    private boolean catchesInfectionFromPreviousCharacter(GridSquare gridSquare, PreviousCharacter previousCharacter) {
+        return (previousCharacter != null && catchesInfectionFromCharacter(gridSquare, previousCharacter.getVirusCharacter(), previousCharacter.getOffsetSquares()));
+    }
+
+    private boolean catchesInfectionFromCharacter(GridSquare gridSquare, VirusCharacter virusCharacter, int offsetSquares) {
+        for (GridSquare[] gridSquareRows : virusCharacter.getGridSquares()) {
+            for (GridSquare previousSquare : gridSquareRows) {
+                if (catchesInfectionFromGridSquare(gridSquare, previousSquare, offsetSquares)) {
+                    return true;
                 }
             }
         }
-
         return false;
     }
 
-    public PreviousCharacter getNearestCharacterThatCanTransmit(List<VirusCharacter> previousCharacters, int countFromEnd, int offsetSquares) {
+    private PreviousCharacter getNearestCharacterThatCanTransmit(List<VirusCharacter> previousCharacters, int countFromEnd, int offsetSquares) {
         int listSize = previousCharacters.size();
         PreviousCharacter previousCharacter;
         if (listSize > countFromEnd) {
+
             VirusCharacter previousVirusCharacter = previousCharacters.get(previousCharacters.size() - 1 - countFromEnd);
+
+            offsetSquares += previousVirusCharacter.getWidth() + 1;
+
             previousCharacter = new PreviousCharacter(previousVirusCharacter, offsetSquares);
 
             if (previousCharacter.getVirusCharacter().canTransmit()) {
                 return previousCharacter;
             }
 
-            offsetSquares += previousCharacter.getVirusCharacter().getWidth() + 1;
             return getNearestCharacterThatCanTransmit(previousCharacters, countFromEnd + 1, offsetSquares);
         }
 
         return null;
     }
 
-    private boolean catchesInfection(GridSquare gridSquare, GridSquare secondSquare, int offsetSquares) {
-        if (secondSquare.isInfected() && !secondSquare.isBlankSquare()) {
+    private boolean catchesInfectionFromGridSquare(GridSquare gridSquare, GridSquare secondSquare, int offsetSquares) {
+        if (!gridSquare.isBlankSquare() && gridSquare.getInfectionLevel() == 0 && secondSquare.isInfected() && !secondSquare.isBlankSquare()) {
             double xDist = gridSquare.getXCoordinate() + offsetSquares - secondSquare.getXCoordinate();
             double yDist = gridSquare.getYCoordinate() - secondSquare.getYCoordinate();
             double absDist = Math.pow(Math.pow(xDist, 2) + Math.pow(yDist, 2), 0.5);
