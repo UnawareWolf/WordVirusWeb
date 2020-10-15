@@ -2,20 +2,25 @@
     font-family: virusIcons;
     src: url("/fonts/Zygoponent-Regular.woff") format("woff");
 }
+@font-face {
+    font-family: Zygote;
+    src: url("/fonts/ZygoteVector-Regular.woff") format("woff");
+}
 div {
     font-family: virusIcons;
-    padding: 0px;
+    padding: 16px;
     text-align: left;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    width: 100%;
+    right: 0px;
+    box-sizing: border-box;
     position: absolute;
+    display: flex;
 }
 #parameters p {
     position: relative;
 }
 body {
-    font-family: Helvetica, Arial;
+    font-family: Zygote, Helvetica, Arial;
 }
 #parameters td, #parameters th {
     border: 1px solid black;
@@ -41,4 +46,28 @@ table {
 }
 input[type=number] {
     width: 130px;
+}
+textarea {
+    font-family: Zygote, Helvetica, Arial;
+    width: 100%;
+    min-height: 400px;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0px;
+    padding: 16px;
+    padding-top: 62px;
+    resize: none;
+    border: none;
+    font-size: 100px;
+    color: black;
+    overflow: hidden;
+    outline: none;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+    caret-color: black;
+}
+
+#characterEntry, #choose, #chooseLabel, #random, #randomLabel {
+ float: left;
+ padding-right: 8px;
 }

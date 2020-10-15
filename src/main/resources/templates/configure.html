@@ -6,18 +6,16 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <script type="text/javascript" src="/js/manipulateHtml.js"></script>
 </head>
-<body>
+<body onload="resizeInputAreaIfNecessary();">
 
 <h1>Zygoponent</h1>
 
 <form action="#" name="inputForm" th:action="@{/}" th:object="${inputConfiguration}" method="post">
 
-    <p><h2>Text</h2><textarea rows="20" cols="80" th:field="*{input}"></textarea></p>
-
     <h2>Parameters</h2>
     <table id="parameters">
         <tr>
-            <th>Infection Level</th>
+            <th>Virus Severity</th>
             <th>Infection Rate</th>
             <th>Progression Rate</th>
             <th>Recovery Rate</th>
@@ -36,11 +34,16 @@
         </tr>
     </table>
 
-    <p id="firstInfected">
+    <p>
         <a class="bold">First infected character: </a><br/><br/>
-        <input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/><label for="random">Random</label> <input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/><label for="choose">Choose</label><br/><br/>
+        <input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>
+        <label id="randomLabel" for="random">Random</label>
+        <input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>
+        <label id="chooseLabel" for="choose">Choose</label>
         <input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/>
+        <br />
     </p>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
 
@@ -52,7 +55,38 @@
 
     <p><a class="bold">Font size: </a><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></p>
 
-    <p><input type="submit" name="action" value="Generate"/> <input type="submit" name="action" value="Reset" formnovalidate/></p>
+    <p><input id="generateButton" type="submit" name="action" value="Generate"/> <input type="submit" name="action" value="Reset" formnovalidate/></p>
+
+
+    <p><textarea oninput="showVectorHideGenerated();" id="inputArea" th:field="*{input}"></textarea></p>
+
+    <p id="layers"></p>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var content = /*[[${inputConfiguration.output}]]*/;
+    var fontSize = /*[[${inputConfiguration.fontSize}]]*/;
+
+    setUpLayerStyles(content.length, getMiniFontSize(fontSize, content.length));
+
+    populateLayers(content);
+
+    if (/*[[${inputConfiguration.showGenerated}]]*/) {
+        showGeneratedHideVector();
+    }
+    else {
+        showVectorHideGenerated();
+    }
+
+    fontSizeMult = fontSize * 5 / 6 + 'px';
+
+    console.log(fontSizeMult);
+
+    document.getElementById('inputArea').style.fontSize = fontSizeMult;
+
+    /*]]>*/
+    </script>
 
     <p th:if="${#fields.hasErrors()}" class="error">
         <a class="bold">Input validation errors:</a></p>

@@ -27,6 +27,8 @@ public class InputConfiguration {
     private boolean randomInitiallyInfected;
     private char initiallyInfected;
 
+    private boolean showGenerated = false;
+
     @NotNull
     @Min(12)
     private int fontSize;
@@ -49,6 +51,7 @@ public class InputConfiguration {
         fontSize = DEFAULT_FONT_SIZE;
         initiallyInfected = DEFAULT_INITIALLY_INFECTED;
         randomInitiallyInfected = DEFAULT_RANDOM_INITIALLY_INFECTED;
+        output = new String[12];
     }
 
     public void setInput(String input) {
@@ -89,6 +92,10 @@ public class InputConfiguration {
 
     public char getInitiallyInfected() {
         return initiallyInfected;
+    }
+
+    public boolean getShowGenerated() {
+        return showGenerated;
     }
 
     public String[] getOutput() {
@@ -159,5 +166,9 @@ public class InputConfiguration {
                 characterCount++;
             }
         }
+    }
+
+    public void setShowGenerated(boolean showGenerated) {
+        this.showGenerated = showGenerated;
     }
 }

@@ -1,9 +1,7 @@
 package com.unawarewolf.wordvirus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 public class VirusGenerator {
 
@@ -46,6 +44,10 @@ public class VirusGenerator {
 
         InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv");
 
+        Set<String> letterSpacePairs = getLetterSpacePairs(); // Make new class for this. This won't work because I need duplicate keys
+
+        char previousChar = 0;
+
         for (int j = 0; j < output.length; j ++) {
             String currentLayerOutput = "";
             for (VirusCharacter virusCharacter : virusCharacters) {
@@ -54,18 +56,56 @@ public class VirusGenerator {
 
                     GridSquare currentSquare = virusCharacter.getGridSquares()[i][j];
 
-                    currentLayerOutput += infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
+                    if (virusCharacter.getCharacter() != '\r' && virusCharacter.getCharacter() != '\n') {
+                        currentLayerOutput += infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
+                    }
                 }
 
-                currentLayerOutput += BLANK_SQUARE_CODE;
-                if (virusCharacter.getCharacter() == ' ') {
+                String pairWithNextCharacter = "" + virusCharacter.getCharacter() + getNextCharacterInList(virusCharacter);
+                if (!letterSpacePairs.contains(pairWithNextCharacter) &&
+                        virusCharacter.getCharacter() != '\r' && previousChar != '\r') {
+                    currentLayerOutput += BLANK_SQUARE_CODE;
+                }
+
+//                Character currentSpacePairMapping = letterSpacePairs.get(virusCharacter.getCharacter());
+//                Character nextCharInList = getNextCharacterInList(virusCharacter);
+//                if (currentSpacePairMapping == null || !currentSpacePairMapping.equals(nextCharInList)) {
+//                    currentLayerOutput += BLANK_SQUARE_CODE;
+//                }
+//                else {
+//                    System.out.println("yep");
+//                }
+                if (virusCharacter.getCharacter() == '\r') {
+                    currentLayerOutput += "\n";
+                }
+
+                else if (virusCharacter.getCharacter() == ' ') {
                     currentLayerOutput += " ";
                 }
+
+                previousChar = virusCharacter.getCharacter();
 
             }
             output[j] = currentLayerOutput;
         }
         return output;
+    }
+
+    private char getNextCharacterInList(VirusCharacter current) {
+        int index = virusCharacters.indexOf(current);
+        if (index < 0 || index + 1 == virusCharacters.size()) {
+            return '\0';
+        }
+        return virusCharacters.get(index + 1).getCharacter();
+    }
+
+    private Set<String> getLetterSpacePairs() {
+        List<String[]> letterSpacePairContent = FileHelper.getCSVContent("csv_letter_maps/no-letterspace-pairs-Table 1.csv");
+        Set<String> letterSpacePairMap = new HashSet<>();
+        for (String[] row : letterSpacePairContent) {
+            letterSpacePairMap.add(row[0] + row[1]);
+        }
+        return letterSpacePairMap;
     }
 
     public void setInputConfiguration(InputConfiguration inputConfiguration) {

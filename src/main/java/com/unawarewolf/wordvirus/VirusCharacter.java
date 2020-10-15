@@ -187,18 +187,32 @@ public class VirusCharacter {
 
     private List<String[]> getCharacterCSVData() {
         String filePath;
-        if (character == '.') {
-            filePath = "csv_letter_maps/point-Table 1.csv";
-        }
-        else if (character == ' ') {
-            filePath = "csv_letter_maps/space-Table 1.csv";
-        }
-        else {
-            filePath = "csv_letter_maps/";
-            if (Character.isUpperCase(character)) {
-                filePath += "caps/";
-            }
-            filePath += character + "-Table 1.csv";
+
+        switch(character) {
+            case '.':
+                filePath = "csv_letter_maps/point-Table 1.csv";
+                break;
+            case ' ':
+                filePath = "csv_letter_maps/space-Table 1.csv";
+                break;
+            case '?':
+                filePath = "csv_letter_maps/question-Table 1.csv";
+                break;
+            case ':':
+                filePath = "csv_letter_maps/colon-Table 1.csv";
+                break;
+            case '-':
+                filePath = "csv_letter_maps/dash-Table 1.csv";
+                break;
+            case '–':
+                filePath = "csv_letter_maps/hyphen-Table 1.csv";
+                break;
+            default:
+                filePath = "csv_letter_maps/";
+                if (Character.isUpperCase(character)) {
+                    filePath += "caps/";
+                }
+                filePath += character + "-Table 1.csv";
         }
 
         List<String[]> csvData = FileHelper.getCSVContent(filePath);

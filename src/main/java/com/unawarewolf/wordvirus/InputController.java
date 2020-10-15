@@ -51,12 +51,16 @@ public class InputController {
         virusGenerator.setInputConfiguration(inputConfiguration);
         inputConfiguration.randomiseInitiallyInfectedIfRandomSelected();
         inputConfiguration.setOutput(virusGenerator.generateOutputText());
+        inputConfiguration.setShowGenerated(true);
         model.addAttribute("inputConfiguration", inputConfiguration);
-        return "result";
+        return "configure";
     }
 
     private String displayForm(Model model, boolean reset) {
         inputConfiguration = reset ? new InputConfiguration() : inputConfiguration;
+        virusGenerator = virusGenerator == null ? new VirusGenerator(inputConfiguration) : virusGenerator;
+        inputConfiguration.setOutput(virusGenerator.generateOutputText());
+        inputConfiguration.setShowGenerated(false);
         model.addAttribute("inputConfiguration", inputConfiguration);
         return "configure";
     }
