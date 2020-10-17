@@ -67,14 +67,6 @@ public class VirusGenerator {
                     currentLayerOutput += BLANK_SQUARE_CODE;
                 }
 
-//                Character currentSpacePairMapping = letterSpacePairs.get(virusCharacter.getCharacter());
-//                Character nextCharInList = getNextCharacterInList(virusCharacter);
-//                if (currentSpacePairMapping == null || !currentSpacePairMapping.equals(nextCharInList)) {
-//                    currentLayerOutput += BLANK_SQUARE_CODE;
-//                }
-//                else {
-//                    System.out.println("yep");
-//                }
                 if (virusCharacter.getCharacter() == '\r') {
                     currentLayerOutput += "\n";
                 }

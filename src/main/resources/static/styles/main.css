@@ -55,6 +55,8 @@ input[type=number] {
 .keyButton {
     font-family: Zygote, Helvetica, Arial;
     font-size: 12px;
+    position: relative;
+    z-index: 2;
 }
 textarea {
     font-family: Zygote, Helvetica, Arial;
@@ -64,7 +66,7 @@ textarea {
     position: absolute;
     right: 0px;
     padding: 16px;
-    padding-top: 56px;
+    padding-top: 0px;
     resize: none;
     border: none;
     font-size: 22px;
