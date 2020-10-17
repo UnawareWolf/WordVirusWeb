@@ -208,11 +208,11 @@ public class VirusCharacter {
                 filePath = "csv_letter_maps/hyphen-Table 1.csv";
                 break;
             default:
-                filePath = "csv_letter_maps/";
+                filePath = "csv_letter_maps/" + character;
                 if (Character.isUpperCase(character)) {
-                    filePath += "caps/";
+                    filePath += "cap";
                 }
-                filePath += character + "-Table 1.csv";
+                filePath += "-Table 1.csv";
         }
 
         List<String[]> csvData = FileHelper.getCSVContent(filePath);
