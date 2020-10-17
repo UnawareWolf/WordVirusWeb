@@ -8,12 +8,28 @@
 </head>
 <body onload="resizeInputAreaIfNecessary();">
 
-<h1>Zygoponent</h1>
+<!--<h1>Zygoponent</h1>-->
 
 <form action="#" name="inputForm" th:action="@{/}" th:object="${inputConfiguration}" method="post">
 
-    <h2>Parameters</h2>
-    <table id="parameters">
+<!--    <h2>Parameters</h2>-->
+    <table class="parameters">
+        <tr>
+            <th colspan="2">First Infected Character</th>
+        </tr>
+        <tr>
+            <td><label id="randomLabel" for="random">Random</label></td>
+            <td><input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>
+        </tr>
+        <tr>
+            <td><label id="chooseLabel" for="choose">Choose</label></td>
+            <td><input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>
+        </tr>
+        <tr>
+            <td>Character</td>
+            <td><input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/></td>
+        </tr>
+    </table> <table class="parameters">
         <tr>
             <th>Virus Severity</th>
             <th>Infection Rate</th>
@@ -32,17 +48,21 @@
             <td><input step="0.01" min="0" max="1" type="number" th:field="*{progressionHigh}"/></td>
             <td><input step="0.01" min="0" max="1" type="number" th:field="*{recoveryHigh}"/></td>
         </tr>
+    </table> <table class="parameters">
+        <tr><th>Font Size</th></tr>
+        <tr><td><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></td></tr>
     </table>
 
-    <p>
-        <a class="bold">First infected character: </a><br/><br/>
-        <input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>
-        <label id="randomLabel" for="random">Random</label>
-        <input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>
-        <label id="chooseLabel" for="choose">Choose</label>
-        <input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/>
-        <br />
-    </p>
+<!--    <p>-->
+<!--        <a class="bold">Font size: </a><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/>-->
+<!--        <a class="bold">First infected character: </a>-->
+<!--        <input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>-->
+<!--        <label id="randomLabel" for="random">Random</label>-->
+<!--        <input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/>-->
+<!--        <label id="chooseLabel" for="choose">Choose</label>-->
+<!--        <input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/>-->
+<!--        <br />-->
+<!--    </p>-->
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -53,9 +73,8 @@
         /*]]>*/
     </script>
 
-    <p><a class="bold">Font size: </a><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></p>
-
-    <p><input id="generateButton" type="submit" name="action" value="Generate"/> <input type="submit" name="action" value="Reset" formnovalidate/></p>
+    <br clear="all" />
+    <p><input class="keyButton" id="generateButton" type="submit" name="action" value="Generate"/> <input class="keyButton" type="submit" name="action" value="Reset" formnovalidate/></p>
 
 
     <p><textarea oninput="showVectorHideGenerated();" id="inputArea" th:field="*{input}"></textarea></p>

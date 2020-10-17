@@ -1,10 +1,12 @@
 function setUpCharacterEntryBox(isRandomInitiallyInfected) {
     if (isRandomInitiallyInfected) {
-        var radio = document.getElementById('characterEntry');
-        radio.style.display = 'none';
+        var characterEntryBox = document.getElementById('characterEntry');
+        characterEntryBox.readOnly = true;
+//        radio.style.display = 'none';
     }
     else {
-        document.getElementById('characterEntry').style.display = 'block';
+//        document.getElementById('characterEntry').style.display = 'block';
+        characterEntryBox.readOnly = false;
     }
 }
 
@@ -13,7 +15,8 @@ function setUpCharacterSelectionRadioEventListeners() {
 
     var infectedRadio = document.getElementById('random');
     infectedRadio.addEventListener('change', function() {
-        characterEntryBox.style.display = 'none';
+//        characterEntryBox.style.display = 'none';
+        characterEntryBox.readOnly = true;
         var selectedCharacter = document.getElementById('characterEntry');
         if (selectedCharacter.value.length == 0) {
             selectedCharacter.value = "e";
@@ -22,7 +25,8 @@ function setUpCharacterSelectionRadioEventListeners() {
 
     var chooseRadio = document.getElementById('choose');
     chooseRadio.addEventListener('change', function() {
-        characterEntryBox.style.display = 'block';
+//        characterEntryBox.style.display = 'block';
+        characterEntryBox.readOnly = false;
     });
 }
 
