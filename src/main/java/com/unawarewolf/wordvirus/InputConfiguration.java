@@ -24,7 +24,7 @@ public class InputConfiguration {
     private double infectionLow, infectionHigh, progressionLow, progressionHigh,
             recoveryLow, recoveryHigh;
 
-    private boolean randomInitiallyInfected;
+    private boolean randomInitiallyInfected, colourStyle;
     private char initiallyInfected;
 
     private boolean showGenerated = false;
@@ -110,6 +110,10 @@ public class InputConfiguration {
         return DEFAULT_INITIALLY_INFECTED;
     }
 
+    public boolean isColourStyle() {
+        return colourStyle;
+    }
+
     public void setInfectionLow(double infectionLow) {
         this.infectionLow = infectionLow;
     }
@@ -148,6 +152,10 @@ public class InputConfiguration {
 
     public void setRandomInitiallyInfected(boolean randomInitiallyInfected) {
         this.randomInitiallyInfected = randomInitiallyInfected;
+    }
+
+    public void setColourStyle(boolean colourStyle) {
+        this.colourStyle = colourStyle;
     }
 
     public void randomiseInitiallyInfectedIfRandomSelected() {

@@ -7,8 +7,10 @@ import java.util.Map;
 public class InfectionLevelMap {
 
     private Map<Character, InfectionCharacterProgression> stagesRowMap;
+    private boolean useColour;
 
-    public InfectionLevelMap(String filePath) {
+    public InfectionLevelMap(String filePath, boolean useColour) {
+        this.useColour = useColour;
         List<String[]> content = FileHelper.getCSVContent(filePath);
 
         stagesRowMap = new HashMap<>();
@@ -21,7 +23,7 @@ public class InfectionLevelMap {
     }
 
     public String get(Character initialLetter, int level) {
-        return stagesRowMap.get(initialLetter).get(level);
+        return useColour ? stagesRowMap.get(initialLetter).get(0) : stagesRowMap.get(initialLetter).get(level);
     }
 
     private class InfectionCharacterProgression {

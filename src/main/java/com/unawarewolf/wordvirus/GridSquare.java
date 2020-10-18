@@ -196,4 +196,37 @@ public class GridSquare {
         return inputConfiguration;
     }
 
+    public String getOutput(InfectionLevelMap infectionLevelMap) {
+        String output = "";
+
+        if (character != '\r' && character != '\n') {
+            output += infectionLevelMap.get(fontCode.charAt(0), infectionLevel);
+        }
+
+        return inputConfiguration.isColourStyle() ? wrapOutputInColourTag(output) : output;
+    }
+
+    private String wrapOutputInColourTag(String output) {
+        String tagClass = "";
+
+        if (infectionLevel == 1) {
+            tagClass = immune ? "blueSeven" : "blueOne";
+        }
+        else if (infectionLevel == 2) {
+            tagClass = inRecovery ? "brownSix" : "redTwo";
+        }
+        else if (infectionLevel == 3) {
+            tagClass = inRecovery ? "brownFive" : "redThree";
+        }
+        else if (infectionLevel == 4) {
+            tagClass = "pinkFour";
+        }
+
+        if (tagClass.length() > 0) {
+            output = "<span class=\"" + tagClass + "\">" + output + "</span>";
+        }
+
+        return output;
+    }
+
 }

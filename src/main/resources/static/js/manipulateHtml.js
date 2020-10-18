@@ -94,9 +94,15 @@ function populateLayers(content) {
     for (i = 0; i < content.length; i++) {
         var division = document.createElement('div');
         division.id = "layer" + i;
+
+//        layerContent = "<a>";
+
         if (content[i].length > 0) {
-            division.innerText = content[i];
+            division.innerHTML = content[i];
+//            layerContent += content[i];
         }
+//        layerContent += "</a>";
+//        division.innerHTML = layerContent;
         document.getElementById("layers").appendChild(division);
     }
 }

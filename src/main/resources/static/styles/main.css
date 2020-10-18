@@ -89,3 +89,25 @@ textarea {
     font-size: 12px;
     width: 1em;
 }
+
+span.blueOne {
+    color: #33cccc;
+}
+span.redTwo {
+    color: #ff3300;
+}
+span.redThree {
+    color: #dd1133;
+}
+span.pinkFour {
+    color: #ff00cc;
+}
+span.brownFive {
+    color: #aa6666;
+}
+span.brownSix {
+    color: #993300;
+}
+span.blueSeven {
+    color: #336666;
+}

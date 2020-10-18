@@ -42,7 +42,8 @@ public class VirusGenerator {
     public String[] formatOutputContentFont() {
         String[] output = new String[DEFAULT_CHARACTER_HEIGHT];
 
-        InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv");
+        InfectionLevelMap infectionLevelMap = new InfectionLevelMap("csv_letter_maps/stages-Table 1.csv",
+                inputConfiguration.isColourStyle());
 
         Set<String> letterSpacePairs = getLetterSpacePairs(); // Make new class for this. This won't work because I need duplicate keys
 
@@ -56,9 +57,7 @@ public class VirusGenerator {
 
                     GridSquare currentSquare = virusCharacter.getGridSquares()[i][j];
 
-                    if (virusCharacter.getCharacter() != '\r' && virusCharacter.getCharacter() != '\n') {
-                        currentLayerOutput += infectionLevelMap.get(currentSquare.getFontCode().charAt(0), currentSquare.getInfectionLevel());
-                    }
+                    currentLayerOutput += currentSquare.getOutput(infectionLevelMap);
                 }
 
                 String pairWithNextCharacter = "" + virusCharacter.getCharacter() + getNextCharacterInList(virusCharacter);
