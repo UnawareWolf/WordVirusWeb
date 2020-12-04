@@ -57,7 +57,7 @@ public class VirusGenerator {
 
                     GridSquare currentSquare = virusCharacter.getGridSquares()[i][j];
 
-                    currentLayerOutput += currentSquare.getOutput(infectionLevelMap);
+                    currentLayerOutput += currentSquare.getOutput(infectionLevelMap, previousChar);
                 }
 
                 String pairWithNextCharacter = "" + virusCharacter.getCharacter() + getNextCharacterInList(virusCharacter);

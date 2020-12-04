@@ -196,17 +196,17 @@ public class GridSquare {
         return inputConfiguration;
     }
 
-    public String getOutput(InfectionLevelMap infectionLevelMap) {
+    public String getOutput(InfectionLevelMap infectionLevelMap, char previousChar) {
         String output = "";
 
         if (character != '\r' && character != '\n') {
             output += infectionLevelMap.get(fontCode.charAt(0), infectionLevel);
         }
-
-        return inputConfiguration.isColourStyle() ? wrapOutputInColourTag(output) : output;
+        return wrapOutputInColourTag(output, previousChar);
+//        return inputConfiguration.isColourStyle() ? wrapOutputInColourTag(output) : output;
     }
 
-    private String wrapOutputInColourTag(String output) {
+    private String wrapOutputInColourTag(String output, char previousChar) {
         String tagClass = "";
 
         if (infectionLevel == 1) {
@@ -220,6 +220,10 @@ public class GridSquare {
         }
         else if (infectionLevel == 4) {
             tagClass = "pinkFour";
+        }
+
+        if (previousChar == ' ' && coordinates.getX() == 0) {
+            output = "B" + output;
         }
 
         if (tagClass.length() > 0) {

@@ -18,6 +18,7 @@ div {
     display: flex;
 }
 .parameters p {
+    display: inline-block;
     position: relative;
 }
 body {
@@ -88,6 +89,10 @@ textarea {
     font-family: Zygote, Helvetica, Arial;
     font-size: 12px;
     width: 1em;
+}
+
+span {
+    white-space: break-spaces;
 }
 
 span.blueOne {
