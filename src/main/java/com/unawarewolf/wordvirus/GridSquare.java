@@ -202,7 +202,8 @@ public class GridSquare {
         if (character != '\r' && character != '\n') {
             output += infectionLevelMap.get(fontCode.charAt(0), infectionLevel);
         }
-        return wrapOutputInColourTag(output, previousChar);
+        return output;
+//        return wrapOutputInColourTag(output, previousChar);
 //        return inputConfiguration.isColourStyle() ? wrapOutputInColourTag(output) : output;
     }
 
