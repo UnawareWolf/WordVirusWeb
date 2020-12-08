@@ -22,7 +22,7 @@ div {
     position: relative;
 }
 body {
-    font-family: Zygote, Helvetica, Arial;
+    font-family: Helvetica, Arial;
     font-size: 12px;
 }
 .parameters td, .parameters th {
@@ -49,12 +49,15 @@ table {
     min: 12;
     step; 12;
 }
+input[type=text] {
+    border: 0;
+}
 input[type=number] {
+    border: 0;
     width: 4em;
     font-size: 12px;
 }
 .keyButton {
-    font-family: Zygote, Helvetica, Arial;
     font-size: 12px;
     position: relative;
     z-index: 2;
@@ -86,9 +89,8 @@ textarea {
 }
 
 #characterEntry {
-    font-family: Zygote, Helvetica, Arial;
     font-size: 12px;
-    width: 1em;
+    width: 118px;
 }
 
 span {

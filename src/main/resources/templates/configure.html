@@ -12,21 +12,49 @@
 
     <table class="parameters">
         <tr>
-            <th colspan="2">First Infected Character</th>
+            <td>Virus Severity</td>
+            <td>Infection Rate</td>
+            <td>Progression Rate</td>
+            <td>Recovery Rate</td>
         </tr>
         <tr>
-            <td><label id="randomLabel" for="random">Random</label></td>
-            <td><input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>
+            <td>Low / High</td>
+            <td>
+                <input step="0.01" min="0" max="1" type="number" th:field="*{infectionLow}"> /
+                <input step="0.01" min="0" max="1" type="number" th:field="*{infectionHigh}"/>
+            </td>
+            <td>
+                <input step="0.01" min="0" max="1" type="number" th:field="*{progressionLow}"/> /
+                <input step="0.01" min="0" max="1" type="number" th:field="*{progressionHigh}"/>
+            </td>
+            <td>
+                <input step="0.01" min="0" max="1" type="number" th:field="*{recoveryLow}"/> /
+                <input step="0.01" min="0" max="1" type="number" th:field="*{recoveryHigh}"/>
+            </td>
         </tr>
-        <tr>
-            <td><label id="chooseLabel" for="choose">Choose</label></td>
-            <td><input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>
-        </tr>
-        <tr>
-            <td>Character</td>
-            <td><input required id="characterEntry" minlength="1" maxlength="1" type="text" th:field="*{initiallyInfected}"/></td>
-        </tr>
+        <!--        <tr>-->
+        <!--            <th>High</th>-->
+        <!--            <td><input step="0.01" min="0" max="1" type="number" th:field="*{infectionHigh}"/></td>-->
+        <!--            <td><input step="0.01" min="0" max="1" type="number" th:field="*{progressionHigh}"/></td>-->
+        <!--            <td><input step="0.01" min="0" max="1" type="number" th:field="*{recoveryHigh}"/></td>-->
+        <!--        </tr>-->
     </table> <table class="parameters">
+        <tr>
+            <td colspan="2">First Infected Character</td>
+        </tr>
+<!--        <tr>-->
+<!--            <td><label id="randomLabel" for="random">Random</label></td>-->
+<!--            <td><input value="true" id="random" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><label id="chooseLabel" for="choose">Choose</label></td>-->
+<!--            <td><input value="false" id="choose" name="infectedCharacter" type="radio" th:field="*{randomInitiallyInfected}"/></td>-->
+<!--        </tr>-->
+        <tr>
+<!--            <td>Character</td>-->
+            <td><input id="characterEntry" maxlength="1" type="text" placeholder="Random" th:field="*{initiallyInfected}"/></td>
+        </tr>
+    </table> <!--<table class="parameters">
         <tr>
             <th colspan="2">Virus Style</th>
         </tr>
@@ -38,29 +66,10 @@
             <td><label id="colourLabel" for="choose">Colour</label></td>
             <td><input value="true" id="colourStyle" name="infectedCharacter" type="radio" th:field="*{colourStyle}"/></td>
         </tr>
-    </table> <table class="parameters">
-        <tr>
-            <th>Virus Severity</th>
-            <th>Infection Rate</th>
-            <th>Progression Rate</th>
-            <th>Recovery Rate</th>
-        </tr>
-        <tr>
-            <th>Low</th>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{infectionLow}"></td>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{progressionLow}"/></td>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{recoveryLow}"/></td>
-        </tr>
-        <tr>
-            <th>High</th>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{infectionHigh}"/></td>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{progressionHigh}"/></td>
-            <td><input step="0.01" min="0" max="1" type="number" th:field="*{recoveryHigh}"/></td>
-        </tr>
-    </table> <table class="parameters">
+    </table>-->  <!--<table class="parameters">
         <tr><th>Font Size</th></tr>
         <tr><td><input step="12" min="12" type="number" th:field="*{fontSize}" class="fontSizeInput"/></td></tr>
-    </table>
+    </table>-->
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -105,19 +114,19 @@
     /*]]>*/
     </script>
 
-    <p th:if="${#fields.hasErrors()}" class="error">
-        <a class="bold">Input validation errors:</a></p>
-    <ul class="error">
+<!--    <p th:if="${#fields.hasErrors()}" class="error">-->
+<!--        <a class="bold">Input validation errors:</a></p>-->
+    <ul th:if="${#fields.hasErrors()}" class="error">
         <li th:if="${#fields.hasErrors('infectionLow') || #fields.hasErrors('infectionHigh')
                 || #fields.hasErrors('progressionLow') || #fields.hasErrors('progressionHigh')
                 || #fields.hasErrors('recoveryLow') || #fields.hasErrors('recoveryHigh')}">
-            Input parameters must be a non-null, numerical value between 0 and 1.
+            Error: Input parameters must be a non-null, numerical value between 0 and 1.
         </li>
         <li th:if="${#fields.hasErrors('fontSize')}">
-            Font size must be a non-null, integer value greater than or equal to 12.
+            Error: Font size must be a non-null, integer value greater than or equal to 12.
         </li>
         <li th:if="${#fields.hasErrors('fontSize')}">
-            First infected character must be a single character.
+            Error: First infected character must be a single character.
         </li>
     </ul>
     </p>

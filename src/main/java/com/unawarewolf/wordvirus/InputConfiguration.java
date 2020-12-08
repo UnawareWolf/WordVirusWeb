@@ -49,7 +49,8 @@ public class InputConfiguration {
         recoveryHigh = DEFAULT_RECOVERY_HIGH;
         input = FileHelper.getFileAsString(DEFAULT_TXT);
         fontSize = DEFAULT_FONT_SIZE;
-        initiallyInfected = DEFAULT_INITIALLY_INFECTED;
+        randomiseInitiallyInfectedIfRandomSelected();
+//        initiallyInfected = DEFAULT_INITIALLY_INFECTED;
         randomInitiallyInfected = DEFAULT_RANDOM_INITIALLY_INFECTED;
         output = new String[12];
     }
@@ -159,7 +160,12 @@ public class InputConfiguration {
     }
 
     public void randomiseInitiallyInfectedIfRandomSelected() {
-        if (randomInitiallyInfected) {
+        if (initiallyInfected == 0) {
+
+//        }
+
+
+//        if (randomInitiallyInfected) {
             Set<Character> inputCharacters = new HashSet<>();
             for (char inputChar : input.toCharArray()) {
                 inputCharacters.add(inputChar);

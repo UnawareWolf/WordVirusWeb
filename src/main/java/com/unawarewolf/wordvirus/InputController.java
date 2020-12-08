@@ -23,9 +23,9 @@ public class InputController {
     @PostMapping(value="/", params="action=Generate")
     public String generateButtonPress(@Valid @ModelAttribute("inputConfiguration") InputConfiguration inputConfiguration,
                                 BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "configure";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "configure";
+//        }
         this.inputConfiguration = inputConfiguration;
 
         return generateAndDisplayOutput(model);

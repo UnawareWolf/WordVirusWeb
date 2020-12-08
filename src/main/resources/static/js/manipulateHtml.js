@@ -1,33 +1,33 @@
 function setUpCharacterEntryBox(isRandomInitiallyInfected) {
-    if (isRandomInitiallyInfected) {
-        var characterEntryBox = document.getElementById('characterEntry');
-        characterEntryBox.readOnly = true;
-//        radio.style.display = 'none';
-    }
-    else {
-//        document.getElementById('characterEntry').style.display = 'block';
-        characterEntryBox.readOnly = false;
-    }
+//    if (isRandomInitiallyInfected) {
+//        var characterEntryBox = document.getElementById('characterEntry');
+//        characterEntryBox.readOnly = true;
+////        radio.style.display = 'none';
+//    }
+//    else {
+////        document.getElementById('characterEntry').style.display = 'block';
+//        characterEntryBox.readOnly = false;
+//    }
 }
 
 function setUpCharacterSelectionRadioEventListeners() {
-    var characterEntryBox = document.getElementById('characterEntry');
-
-    var infectedRadio = document.getElementById('random');
-    infectedRadio.addEventListener('change', function() {
-//        characterEntryBox.style.display = 'none';
-        characterEntryBox.readOnly = true;
-        var selectedCharacter = document.getElementById('characterEntry');
-        if (selectedCharacter.value.length == 0) {
-            selectedCharacter.value = "e";
-        }
-    });
-
-    var chooseRadio = document.getElementById('choose');
-    chooseRadio.addEventListener('change', function() {
-//        characterEntryBox.style.display = 'block';
-        characterEntryBox.readOnly = false;
-    });
+//    var characterEntryBox = document.getElementById('characterEntry');
+//
+//    var infectedRadio = document.getElementById('random');
+//    infectedRadio.addEventListener('change', function() {
+////        characterEntryBox.style.display = 'none';
+//        characterEntryBox.readOnly = true;
+//        var selectedCharacter = document.getElementById('characterEntry');
+//        if (selectedCharacter.value.length == 0) {
+//            selectedCharacter.value = "e";
+//        }
+//    });
+//
+//    var chooseRadio = document.getElementById('choose');
+//    chooseRadio.addEventListener('change', function() {
+////        characterEntryBox.style.display = 'block';
+//        characterEntryBox.readOnly = false;
+//    });
 }
 
 function hideTextArea() {
