@@ -1,46 +1,18 @@
-a,","
-a,","
-a,;
-a,l
-a,quote left double
-b,","
-b,","
-b,;
-b,quote left double
-c,","
-c,","
-c,;
 c,l
-c,quote left double
-d,","
-d,","
-d,;
-d,quote left double
-e,","
-e,;
-e,l
-e,quote left double
-f,","
-f,;
-f,a
 f,a
 f,c
 f,d
 f,e
 f,f
-f,f
 f,g
-f,i
 f,i
 f,j
 f,l
 f,m
 f,n
 f,o
-f,o
 f,p
 f,q
-f,quote left double
 f,r
 f,s
 f,t
@@ -52,83 +24,40 @@ f,y
 f,z
 g,","
 g,;
-h,","
-h,;
-h,quote left double
-i,","
-i,;
 i,f
-i,j
 I,J
+i,j
 i,l
-i,quote left double
-i,t
 I,t
+i,t
 j,","
 j,;
-k,","
-k,;
 k,l
-k,quote left double
-l,","
-l,;
 l,i
 l,l
-l,l
-l,quote left double
 l,t
-m,","
-m,;
-m,quote left double
-n,","
-n,;
-n,quote left double
-o,","
-o,;
-o,l
-o,quote left double
-p,","
-p,;
-p,quote left double
 P,a
 q,","
 q,;
-r,","
-r,;
+quote left double,R
 r,a
+r,g
+r,-
 r,i
-r,quote left double
-s,","
-s,;
+r,l
+r,O
 s,i
 s,l
-s,quote left double
 s,t
 S,T
-t,","
-t,;
 t,i
 t,l
-t,quote left double
 t,t
-u,","
-u,;
+u,a
+u,f
 u,i
 u,l
-u,quote left double
 u,t
-v,","
-v,;
-v,quote left double
-w,","
-w,;
-w,quote left double
 x,-
-x,","
-x,;
-x,quote left double
 y,","
 y,;
-z,","
-z,;
-z,quote left double
