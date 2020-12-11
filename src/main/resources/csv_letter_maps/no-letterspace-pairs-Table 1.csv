@@ -59,9 +59,9 @@ n,;
 o,","
 o,;
 p,","
-p,l
 p,;
 P,a
+p,l
 quote left double,R
 r,-
 r,","
@@ -77,11 +77,12 @@ s,i
 s,l
 s,t
 S,T
+S,t
 t,","
-T,O
 t,;
 t,i
 t,l
+T,O
 t,t
 u,","
 u,;
