@@ -21,7 +21,7 @@ public class InputConfiguration {
     private static final int DEFAULT_FONT_SIZE = 120;
 
     @NotNull
-    private double infectionLow, infectionHigh, progressionLow, progressionHigh,
+    private int infectionLow, infectionHigh, progressionLow, progressionHigh,
             recoveryLow, recoveryHigh;
 
     private boolean randomInitiallyInfected, colourStyle;
@@ -41,12 +41,12 @@ public class InputConfiguration {
     }
 
     private void setDefaultValues() {
-        infectionLow = DEFAULT_INFECTION_LOW;
-        infectionHigh = DEFAULT_INFECTION_HIGH;
-        progressionLow = DEFAULT_PROGRESSION_LOW;
-        progressionHigh = DEFAULT_PROGRESSION_HIGH;
-        recoveryLow = DEFAULT_RECOVERY_LOW;
-        recoveryHigh = DEFAULT_RECOVERY_HIGH;
+        infectionLow = (int) (DEFAULT_INFECTION_LOW * 100);
+        infectionHigh = (int) (DEFAULT_INFECTION_HIGH * 100);
+        progressionLow = (int) (DEFAULT_PROGRESSION_LOW * 100);
+        progressionHigh = (int) (DEFAULT_PROGRESSION_HIGH * 100);
+        recoveryLow = (int) (DEFAULT_RECOVERY_LOW * 100);
+        recoveryHigh = (int) (DEFAULT_RECOVERY_HIGH * 100);
         input = FileHelper.getFileAsString(DEFAULT_TXT);
         fontSize = DEFAULT_FONT_SIZE;
         randomiseInitiallyInfectedIfRandomSelected();
@@ -63,27 +63,51 @@ public class InputConfiguration {
         return input;
     }
 
-    public double getInfectionLow() {
+    public double getInfectionLowDecimal() {
+        return infectionLow / 100d;
+    }
+
+    public double getInfectionHighDecimal() {
+        return infectionHigh / 100d;
+    }
+
+    public double getProgressionLowDecimal() {
+        return progressionLow / 100d;
+    }
+
+    public double getProgressionHighDecimal() {
+        return progressionHigh / 100d;
+    }
+
+    public double getRecoveryLowDecimal() {
+        return recoveryLow / 100d;
+    }
+
+    public double getRecoveryHighDecimal() {
+        return recoveryHigh / 100d;
+    }
+
+    public int getInfectionLow() {
         return infectionLow;
     }
 
-    public double getInfectionHigh() {
+    public int getInfectionHigh() {
         return infectionHigh;
     }
 
-    public double getProgressionLow() {
+    public int getProgressionLow() {
         return progressionLow;
     }
 
-    public double getProgressionHigh() {
+    public int getProgressionHigh() {
         return progressionHigh;
     }
 
-    public double getRecoveryLow() {
+    public int getRecoveryLow() {
         return recoveryLow;
     }
 
-    public double getRecoveryHigh() {
+    public int getRecoveryHigh() {
         return recoveryHigh;
     }
 
@@ -115,27 +139,27 @@ public class InputConfiguration {
         return colourStyle;
     }
 
-    public void setInfectionLow(double infectionLow) {
+    public void setInfectionLow(int infectionLow) {
         this.infectionLow = infectionLow;
     }
 
-    public void setInfectionHigh(double infectionHigh) {
+    public void setInfectionHigh(int infectionHigh) {
         this.infectionHigh = infectionHigh;
     }
 
-    public void setProgressionLow(double progressionLow) {
+    public void setProgressionLow(int progressionLow) {
         this.progressionLow = progressionLow;
     }
 
-    public void setProgressionHigh(double progressionHigh) {
+    public void setProgressionHigh(int progressionHigh) {
         this.progressionHigh = progressionHigh;
     }
 
-    public void setRecoveryLow(double recoveryLow ) {
+    public void setRecoveryLow(int recoveryLow ) {
         this.recoveryLow = recoveryLow;
     }
 
-    public void setRecoveryHigh(double recoveryHigh) {
+    public void setRecoveryHigh(int recoveryHigh) {
         this.recoveryHigh = recoveryHigh;
     }
 

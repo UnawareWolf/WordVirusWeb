@@ -54,7 +54,7 @@ input[type=text] {
 }
 input[type=number] {
     border: 0;
-    width: 4em;
+    width: 3em;
     font-size: 12px;
 }
 .keyButton {
@@ -81,6 +81,10 @@ textarea {
     z-index: 1;
     background-color: rgba(0, 0, 0, 0);
     caret-color: black;
+}
+
+.valuePadding {
+  border: 0px inset #ccc;
 }
 
 #choose, #chooseLabel, #random, #randomLabel {

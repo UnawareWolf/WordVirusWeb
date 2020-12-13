@@ -3,6 +3,9 @@
 <head>
     <title>Zygoponent</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <script type="text/javascript" src="/js/manipulateHtml.js"></script>
 </head>
@@ -20,16 +23,16 @@
         <tr>
             <td>Low / High</td>
             <td>
-                <input step="0.01" min="0" max="1" type="number" th:field="*{infectionLow}"> /
-                <input step="0.01" min="0" max="1" type="number" th:field="*{infectionHigh}"/>
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{infectionLow}"/>%</span> /
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{infectionHigh}"/>%</span>
             </td>
             <td>
-                <input step="0.01" min="0" max="1" type="number" th:field="*{progressionLow}"/> /
-                <input step="0.01" min="0" max="1" type="number" th:field="*{progressionHigh}"/>
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{progressionLow}"/>%</span> /
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{progressionHigh}"/>%</span>
             </td>
             <td>
-                <input step="0.01" min="0" max="1" type="number" th:field="*{recoveryLow}"/> /
-                <input step="0.01" min="0" max="1" type="number" th:field="*{recoveryHigh}"/>
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{recoveryLow}"/>%</span> /
+                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{recoveryHigh}"/>%</span>
             </td>
         </tr>
         <!--        <tr>-->

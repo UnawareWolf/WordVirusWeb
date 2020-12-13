@@ -12,13 +12,15 @@ public class VirusCharacter {
     private boolean firstInfected;
     private GridSquare[][] gridSquares;
     private int width, height;
+    private boolean quoteStart;
 
     private VirusGenerator virusGenerator;
     private InputConfiguration inputConfiguration;
 
     private Random rand;
 
-    public VirusCharacter(VirusGenerator virusGenerator, char character) {
+    public VirusCharacter(VirusGenerator virusGenerator, char character, boolean quoteStart) {
+        this.quoteStart = quoteStart;
         this.inputConfiguration = virusGenerator.getInputConfiguration();
         this.character = character;
         this.virusGenerator = virusGenerator;
@@ -27,7 +29,8 @@ public class VirusCharacter {
         initialiseGridSquares();
     }
 
-    public VirusCharacter(VirusCharacter virusCharacter) {
+    public VirusCharacter(VirusCharacter virusCharacter, boolean quoteStart) {
+        this.quoteStart = quoteStart;
         inputConfiguration = virusCharacter.getInputConfiguration();
         character = virusCharacter.getCharacter();
         virusGenerator = virusCharacter.getVirusGenerator();
@@ -77,7 +80,7 @@ public class VirusCharacter {
 
         updateInfectionLevels(virusCharacters);
 
-        virusGenerator.getCharacterMap().put(character, this);
+//        virusGenerator.getCharacterMap().put(character, this);
     }
 
     private void updateInfectionLevels(List<VirusCharacter> virusCharacters) {
@@ -186,29 +189,54 @@ public class VirusCharacter {
     }
 
     private List<String[]> getCharacterCSVData() {
-        String filePath;
+        String filePath = "csv_letter_maps/";
 
         switch(character) {
             case '.':
-                filePath = "csv_letter_maps/point-Table 1.csv";
+                filePath += "point-Table 1.csv";
                 break;
             case ' ':
-                filePath = "csv_letter_maps/space-Table 1.csv";
+                filePath += "space-Table 1.csv";
                 break;
             case '?':
-                filePath = "csv_letter_maps/question-Table 1.csv";
+                filePath += "question-Table 1.csv";
                 break;
             case ':':
-                filePath = "csv_letter_maps/colon-Table 1.csv";
+                filePath += "colon-Table 1.csv";
                 break;
             case '-':
-                filePath = "csv_letter_maps/dash-Table 1.csv";
+                filePath += "hyphen-Table 1.csv";
                 break;
             case '–':
-                filePath = "csv_letter_maps/hyphen-Table 1.csv";
+                filePath += "dash-Table 1.csv";
+                break;
+            case '&':
+                filePath += "ampersand-Table 1.csv";
+                break;
+            case '"':
+                if (quoteStart) {
+                    filePath += "quote left double-Table 1.csv";
+                }
+                else {
+                    filePath += "quote right double-Table 1.csv";
+                }
+                break;
+            case '\'':
+                if (quoteStart) {
+                    filePath += "quote left single-Table 1.csv";
+                }
+                else {
+                    filePath += "quote right single-Table 1.csv";
+                }
+                break;
+            case '′':
+                filePath += "prime-Table 1.csv";
+                break;
+            case '″':
+                filePath += "double prime-Table 1.csv";
                 break;
             default:
-                filePath = "csv_letter_maps/" + character;
+                filePath += character;
                 if (Character.isUpperCase(character)) {
                     filePath += "cap";
                 }
