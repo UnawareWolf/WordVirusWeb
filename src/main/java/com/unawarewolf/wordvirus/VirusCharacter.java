@@ -214,20 +214,10 @@ public class VirusCharacter {
                 filePath += "ampersand-Table 1.csv";
                 break;
             case '"':
-                if (quoteStart) {
-                    filePath += "quote left double-Table 1.csv";
-                }
-                else {
-                    filePath += "quote right double-Table 1.csv";
-                }
+                filePath += quoteStart ? "quote left double-Table 1.csv" : "quote right double-Table 1.csv";
                 break;
             case '\'':
-                if (quoteStart) {
-                    filePath += "quote left single-Table 1.csv";
-                }
-                else {
-                    filePath += "quote right single-Table 1.csv";
-                }
+                filePath += quoteStart ? "quote left single-Table 1.csv" : "quote right single-Table 1.csv";
                 break;
             case '′':
                 filePath += "prime-Table 1.csv";
