@@ -49,8 +49,6 @@ table {
 .error {
     color: red;
 }
-.bold {
-}
 .frontLayer {
     position: relative;
     z-index: 1;
@@ -66,22 +64,6 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-/*input[type=number] {
-    border: 0;
-    font-size: 12px;
-    -moz-appearance: textfield;
-}*/
-.percentageInput {
-    /*width: 28px;*/
-    position: relative;
-    z-index: 2;
-    border: 0;
-    font-size: 12px;
-    -moz-appearance: textfield;
-}
-.percentageInput:focus {
-    outline: 0;
 }
 .numberInput {
     box-sizing: border-box;

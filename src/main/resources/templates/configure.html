@@ -12,46 +12,19 @@
 <body onload="resizeInputAreaIfNecessary();">
 <div class="header">Zygote font generator 0.10</div>
 <form id="inputForm" action="#" name="inputForm" th:action="@{/}" th:object="${inputConfiguration}" method="post">
-
-    <!--<table class="parameters">
-        <tr>
-            <td>Virus Severity</td>
-            <td>Infection Rate</td>
-            <td>Progression Rate</td>
-            <td>Recovery Rate</td>
-        </tr>
-        <tr>
-            <td>Low / High</td>
-            <td>
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{infectionLow}"/>%</span> /
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{infectionHigh}"/>%</span>
-            </td>
-            <td>
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{progressionLow}"/>%</span> /
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{progressionHigh}"/>%</span>
-            </td>
-            <td>
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{recoveryLow}"/>%</span> /
-                <span class="valuePadding"><input step="1" min="0" max="100" type="number" th:field="*{recoveryHigh}"/>%</span>
-            </td>
-        </tr>
-    </table>--> <table class="parameters">
+    <table class="parameters">
         <tr>
             <td colspan="2">Infection Rate (weak/strong)</td>
         </tr>
         <tr>
-<!--            <td class="percentageCell" id="infectionLowCell">-->
             <td>
                 <input id="lowInfectionNumber" class="numberInput" type="number" th:field="*{infectionLow}"/>
                 <input id="lowInfectionText" class="percentageText" type="text"/>
-<!--                <input id="infectionLowInput" autocomplete="off" class="percentageInput" step="1" min="0" max="100" type="number" th:field="*{infectionLow}"/>-->
-<!--                <span class="appendPercent">%</span>-->
             </td>
             <td>
                 <input id="highInfectionNumber" class="numberInput" type="number" th:field="*{infectionHigh}"/>
                 <input id="highInfectionText" class="percentageText" type="text"/>
             </td>
-<!--            <td><input class="percentageInput" step="1" min="0" max="100" type="number" th:field="*{infectionHigh}"/></td>-->
         </tr>
     </table> <table class="parameters">
         <tr>
@@ -67,10 +40,6 @@
                 <input id="highProgressionText" class="percentageText" type="text"/>
             </td>
         </tr>
-<!--        <tr>-->
-<!--            <td><input class="percentageInput" step="1" min="0" max="100" type="number" th:field="*{progressionLow}"/></td>-->
-<!--            <td><input class="percentageInput" step="1" min="0" max="100" type="number" th:field="*{progressionHigh}"/></td>-->
-<!--        </tr>-->
     </table> <table class="parameters">
         <tr>
             <td colspan="2">Recovery Rate (weak/strong)</td>
@@ -104,9 +73,6 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
 
-            setUpCharacterEntryBox(/*[[${inputConfiguration.randomInitiallyInfected}]]*/);
-            setUpCharacterSelectionRadioEventListeners();
-            //setUpPercentageInput();
             setUpSubmitListener();
             setUpHiddenInputs();
 
@@ -114,8 +80,6 @@
     </script>
 
     <br clear="all" />
-<!--    <p><input class="keyButton" id="generateButton" type="submit" name="action" value="Generate"/> <input class="keyButton" type="submit" name="action" value="Reset" formnovalidate/></p>-->
-
 
     <p><textarea oninput="showVectorHideGenerated();" id="inputArea" th:field="*{input}"></textarea></p>
 
