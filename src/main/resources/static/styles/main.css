@@ -6,7 +6,18 @@
     font-family: Zygote;
     src: url("/fonts/ZygoteVector-Regular.woff") format("woff");
 }
-div {
+body {
+    font-family: Helvetica, Arial;
+    font-size: 12px;
+}
+.header {
+    margin-left: 2px;
+    margin-bottom: 6px;
+}
+input {
+    font-family: Helvetica, Arial;
+}
+virusIcons {
     font-family: virusIcons;
     padding: 16px;
     padding-top: 0px;
@@ -21,20 +32,19 @@ div {
     display: inline-block;
     position: relative;
 }
-body {
-    font-family: Helvetica, Arial;
-    font-size: 12px;
-}
 .parameters td, .parameters th {
     height: 21px;
-    border: 1px solid black;
-    padding: 2px;
+    border: 2px solid black;
+    padding: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     text-align: left;
 }
 table {
     float: left;
     border-collapse: collapse;
     margin-right: 8px;
+    table-layout: fixed;
 }
 .error {
     color: red;
@@ -47,20 +57,76 @@ table {
 }
 .fontSizeInput {
     min: 12;
-    step; 12;
+    step: 12;
 }
 input[type=text] {
     border: 0;
 }
-input[type=number] {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*input[type=number] {
     border: 0;
-    width: 3em;
     font-size: 12px;
+    -moz-appearance: textfield;
+}*/
+.percentageInput {
+    /*width: 28px;*/
+    position: relative;
+    z-index: 2;
+    border: 0;
+    font-size: 12px;
+    -moz-appearance: textfield;
+}
+.percentageInput:focus {
+    outline: 0;
+}
+.numberInput {
+    box-sizing: border-box;
+    width: 70px;
+    position: relative;
+    z-index: 2;
+    border: 0;
+    font-size: 12px;
+    -moz-appearance: textfield;
+}
+.numberInput:focus {
+    outline: 0;
+}
+.percentageText {
+    box-sizing: border-box;
+    width: 70px;
+    position: relative;
+    z-index: 2;
+    border: 0;
+    font-size: 12px;
+    -moz-appearance: textfield;
+}
+.percentageText:focus {
+    outline: 0;
+}
+.percentageText {
+    display: none;
 }
 .keyButton {
     font-size: 12px;
     position: relative;
     z-index: 2;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+}
+.keyButton:hover {
+    cursor: pointer;
+}
+.keyButton:focus {
+    outline: 0;
+}
+.hoverSelect:hover {
+    background: Gainsboro;
 }
 textarea {
     font-family: Zygote, Helvetica, Arial;
@@ -82,25 +148,25 @@ textarea {
     background-color: rgba(0, 0, 0, 0);
     caret-color: black;
 }
-
 .valuePadding {
   border: 0px inset #ccc;
 }
-
 #choose, #chooseLabel, #random, #randomLabel {
     float: left;
     padding-right: 8px;
 }
-
 #characterEntry {
+    position: relative;
+    z-index: 2;
     font-size: 12px;
-    width: 118px;
+    width: 80px;
 }
-
+#characterEntry:focus {
+    outline: 0;
+}
 span {
     white-space: break-spaces;
 }
-
 span.blueOne {
     color: #33cccc;
 }
