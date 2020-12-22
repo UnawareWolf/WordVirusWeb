@@ -111,6 +111,44 @@ function getMiniFontSize(fontSize, minFontSize) {
     return Math.round(smallFontSize);
 }
 
+function unifySpacing(miniFontSize) {
+    var uniformSpaceStyle = miniFontSize + 'px';
+    document.getElementById('body').style.padding = uniformSpaceStyle;
+    document.getElementById('header').style.marginBottom = uniformSpaceStyle;
+    document.getElementById('inputArea').style.padding = uniformSpaceStyle;
+
+    var parameterTables = document.getElementsByClassName('parameters');
+    var maxTableWidth = 0;
+    for (i in parameterTables) {
+        if (!(parameterTables[i].style === undefined)) {
+            var table = parameterTables[i];
+            table.style.marginBottom = uniformSpaceStyle;
+            table.style.marginRight = uniformSpaceStyle;
+            var tableWidth = getWidth(table);
+            if (tableWidth > maxTableWidth) {
+                maxTableWidth = tableWidth;
+            }
+        }
+    }
+    maxTableWidth = (Math.ceil(maxTableWidth / (2 * miniFontSize)) * 2 * miniFontSize);
+    var smallTableWidth = maxTableWidth / 2;
+    for (i in parameterTables) {
+        if (!(parameterTables[i].style === undefined)) {
+            var table = parameterTables[i];
+            var tableWidth = getWidth(table);
+            if (tableWidth < smallTableWidth) {
+                table.style.width = smallTableWidth + 'px';
+            }
+            else {
+                table.style.width = maxTableWidth + 'px';
+            }
+        }
+    }
+}
+
+function getWidth(tableElement) {
+    return parseInt(window.getComputedStyle(tableElement, null).getPropertyValue('width').replace('px', ''));
+}
 
 var observe;
 if (window.attachEvent) {

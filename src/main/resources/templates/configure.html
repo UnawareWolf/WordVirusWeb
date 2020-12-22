@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <script type="text/javascript" src="/js/manipulateHtml.js"></script>
 </head>
-<body onload="resizeInputAreaIfNecessary();">
-<div class="header">Zygote font generator 0.10</div>
+<body id="body" onload="resizeInputAreaIfNecessary();">
+<div id="header">Zygote font generator 0.10</div>
 <form id="inputForm" action="#" name="inputForm" th:action="@{/}" th:object="${inputConfiguration}" method="post">
     <table class="parameters">
         <tr>
@@ -91,7 +91,9 @@
     var content = /*[[${inputConfiguration.output}]]*/;
     var fontSize = /*[[${inputConfiguration.fontSize}]]*/;
 
-    setUpLayerStyles(content.length, getMiniFontSize(fontSize, content.length));
+    var miniFontSize = getMiniFontSize(fontSize, content.length);
+    setUpLayerStyles(content.length, miniFontSize);
+    unifySpacing(miniFontSize);
 
     populateLayers(content);
 

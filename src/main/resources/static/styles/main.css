@@ -9,18 +9,25 @@
 body {
     font-family: Helvetica, Arial;
     font-size: 12px;
+    margin: 0px;
+    padding: 0px;
 }
-.header {
-    margin-left: 2px;
+/*#header {
+    margin-top:
+    margin-left: 16px;
     margin-bottom: 6px;
-}
+}*/
+/*#inputForm {
+    padding: 0px;
+    padding-left: 16px;
+}*/
 input {
     font-family: Helvetica, Arial;
 }
 virusIcons {
     font-family: virusIcons;
-    padding: 16px;
-    padding-top: 0px;
+    /*padding: 16px;
+    padding-top: 0px;*/
     text-align: left;
     width: 100%;
     right: 0px;
@@ -43,7 +50,7 @@ virusIcons {
 table {
     float: left;
     border-collapse: collapse;
-    margin-right: 8px;
+    /*margin-right: 16px;*/
     table-layout: fixed;
 }
 .error {
@@ -100,6 +107,7 @@ input::-webkit-inner-spin-button {
     background: none;
     border: none;
     text-align: left;
+    padding: 0px;
 }
 .keyButton:hover {
     cursor: pointer;
