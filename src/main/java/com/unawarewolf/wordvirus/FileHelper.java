@@ -10,10 +10,26 @@ public class FileHelper {
         List<String[]> csvContent = new ArrayList<>();
         for (String line : readFileLineByLine(filePath)) {
             if (!line.equals("")) {
-                csvContent.add(line.split(","));
+               csvContent.add(convertDoubleQuotesToCommas(line.split(",")));
             }
         }
         return csvContent;
+    }
+
+    public static String[] convertDoubleQuotesToCommas(String[] strArray) {
+        String rebuiltLine = "";
+        for (String entry : strArray) {
+            rebuiltLine += entry;
+        }
+        rebuiltLine = rebuiltLine.replace("\"\"", ",");
+
+        String[] rebuiltStrArray = new String[rebuiltLine.length()];
+        int charCount = 0;
+        for (char singleChar : rebuiltLine.toCharArray()) {
+            rebuiltStrArray[charCount] = Character.toString(singleChar);
+            charCount += 1;
+        }
+        return rebuiltStrArray;
     }
 
     public static String getFileAsString(String filePath) {
