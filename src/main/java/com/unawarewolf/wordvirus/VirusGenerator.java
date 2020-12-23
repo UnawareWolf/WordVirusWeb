@@ -12,7 +12,7 @@ public class VirusGenerator {
 
     private InputConfiguration inputConfiguration;
     private List<VirusCharacter> virusCharacters;
-    private Map<String, VirusCharacter> characterMap;
+    private Map<Character, VirusCharacter> characterMap;
 
     public VirusGenerator(InputConfiguration inputConfiguration) {
         this.inputConfiguration = inputConfiguration;
@@ -27,29 +27,17 @@ public class VirusGenerator {
         virusCharacters = new ArrayList<>();
         characterMap = new HashMap<>();
 
-        boolean quoteStart;
-        char previousChar = ' ';
         for (char character : inputConfiguration.getInput().toCharArray()) {
-            quoteStart = (previousChar == ' ');
-            VirusCharacter virusCharacter = createVirusCharacter(character, quoteStart);
+            VirusCharacter virusCharacter = createVirusCharacter(character);
             virusCharacter.update(virusCharacters);
-            characterMap.put(getCharacterKey(character, quoteStart), virusCharacter);
+            characterMap.put(character, virusCharacter);
             virusCharacters.add(virusCharacter);
-            previousChar = character;
         }
     }
 
-    private String getCharacterKey(char character, boolean quoteStart) {
-        String charKey = Character.toString(character);
-        if (!charKey.equals("\"") && !charKey.equals("'")) {
-            return charKey;
-        }
-        return quoteStart ? charKey + "l" : charKey + "r";
-    }
-
-    private VirusCharacter createVirusCharacter(char character, boolean quoteStart) {
-        return characterMap.containsKey(getCharacterKey(character, quoteStart)) ? new VirusCharacter(characterMap.get(getCharacterKey(character, quoteStart)), quoteStart) :
-                new VirusCharacter(this, character, quoteStart);
+    private VirusCharacter createVirusCharacter(char character) {
+        return characterMap.containsKey(character) ? new VirusCharacter(characterMap.get(character)) :
+                new VirusCharacter(this, character);
     }
 
     public String[] formatOutputContentFont() {
@@ -120,7 +108,7 @@ public class VirusGenerator {
         return inputConfiguration;
     }
 
-    public Map<String, VirusCharacter> getCharacterMap() {
+    public Map<Character, VirusCharacter> getCharacterMap() {
         return characterMap;
     }
 

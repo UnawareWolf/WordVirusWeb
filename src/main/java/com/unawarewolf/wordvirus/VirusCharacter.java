@@ -12,15 +12,13 @@ public class VirusCharacter {
     private boolean firstInfected;
     private GridSquare[][] gridSquares;
     private int width, height;
-    private boolean quoteStart;
 
     private VirusGenerator virusGenerator;
     private InputConfiguration inputConfiguration;
 
     private Random rand;
 
-    public VirusCharacter(VirusGenerator virusGenerator, char character, boolean quoteStart) {
-        this.quoteStart = quoteStart;
+    public VirusCharacter(VirusGenerator virusGenerator, char character) {
         this.inputConfiguration = virusGenerator.getInputConfiguration();
         this.character = character;
         this.virusGenerator = virusGenerator;
@@ -29,8 +27,7 @@ public class VirusCharacter {
         initialiseGridSquares();
     }
 
-    public VirusCharacter(VirusCharacter virusCharacter, boolean quoteStart) {
-        this.quoteStart = quoteStart;
+    public VirusCharacter(VirusCharacter virusCharacter) {
         inputConfiguration = virusCharacter.getInputConfiguration();
         character = virusCharacter.getCharacter();
         virusGenerator = virusCharacter.getVirusGenerator();
@@ -213,15 +210,27 @@ public class VirusCharacter {
             case '&':
                 filePath += "ampersand-Table 1.csv";
                 break;
-            case '"':
-                filePath += quoteStart ? "quote left double-Table 1.csv" : "quote right double-Table 1.csv";
+            case '“':
+                filePath += "quote left double-Table 1.csv";
                 break;
+            case '”':
+                filePath += "quote right double-Table 1.csv";
+                break;
+            case '‘':
+                filePath += "quote left single-Table 1.csv";
+                break;
+            case '’':
+                filePath += "quote right single-Table 1.csv";
+                break;
+//            case '"':
+//                filePath += quoteStart ? "quote left double-Table 1.csv" : "quote right double-Table 1.csv";
+//                break;
             case '\'':
-                filePath += quoteStart ? "quote left single-Table 1.csv" : "quote right single-Table 1.csv";
-                break;
-            case '′':
                 filePath += "prime-Table 1.csv";
                 break;
+//            case '′':
+//                filePath += ""; // what is this ?
+//                break;
             case '″':
                 filePath += "double prime-Table 1.csv";
                 break;
