@@ -63,7 +63,8 @@ public class VirusGenerator {
 
                 String pairWithNextCharacter = "" + virusCharacter.getCharacter() + getNextCharacterInList(virusCharacter);
                 if (!letterSpacePairs.contains(pairWithNextCharacter) &&
-                        virusCharacter.getCharacter() != '\r' && previousChar != '\r') {
+                        virusCharacter.getCharacter() != '\r' && previousChar != '\r' &&
+                        virusCharacter.getCharacter() != '-') {
                     currentLayerOutput += BLANK_SQUARE_CODE;
                 }
 
@@ -71,7 +72,7 @@ public class VirusGenerator {
                     currentLayerOutput += "\n";
                 }
 
-                else if (virusCharacter.getCharacter() == ' ') {
+                else if (virusCharacter.getCharacter() == ' ' || virusCharacter.getCharacter() == '-') {
                     currentLayerOutput += " ";
                 }
 
