@@ -75,7 +75,7 @@ function setUpLayerStyles(noOfLayers, fontSize) {
     var inputAreaTop = document.getElementById("inputArea").getBoundingClientRect().top
     var styleSheet = document.styleSheets[0];
     for (var i = 0; i < noOfLayers; i++) {
-        var layerTop = i*fontSize + inputAreaTop - 55;
+        var layerTop = i*fontSize;// + inputAreaTop;// - 55;
         var rule = "#layer" + i + " {top: " + layerTop + "px;}";
         styleSheet.insertRule(rule, 0);
     }
