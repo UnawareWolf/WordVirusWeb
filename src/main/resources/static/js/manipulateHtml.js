@@ -61,6 +61,16 @@ function setUpHiddenInputs() {
     }
 }
 
+function removeSubmitButtonPadding() {
+    var hoverSelectCells = document.getElementsByClassName('hoverSelect');
+    for (i in hoverSelectCells) {
+        var cell = hoverSelectCells[i];
+        if (!(cell.style === undefined)) {
+            cell.style.padding = '0px';
+        }
+    }
+}
+
 function showGeneratedHideVector() {
     document.getElementById('layers').style.color = 'black';
     document.getElementById('inputArea').style.color = 'rgba(0, 0, 0, 0)';
@@ -152,34 +162,37 @@ function getWidth(tableElement) {
 
 var observe;
 if (window.attachEvent) {
-    observe = function (element, event, handler) {
+    observe = function(element, event, handler) {
         element.attachEvent('on'+event, handler);
     };
 }
 else {
-    observe = function (element, event, handler) {
+    observe = function(element, event, handler) {
         element.addEventListener(event, handler, false);
     };
 }
-
 function resizeInputAreaIfNecessary() {
-    var inputArea = document.getElementById('inputArea');
+    var text = document.getElementById('inputArea');
     function resize () {
-        inputArea.style.height = 'auto';
-        inputArea.style.height = inputArea.scrollHeight+'px';
+        var clone = text.cloneNode();
+        clone.className = 'clone';
+        text.parentNode.insertBefore(clone, text);
+        clone.style.height = 'auto';
+        clone.value = text.value;
+        text.style.height = (clone.scrollTop + clone.scrollHeight + 20) + 'px';
+        text.parentNode.removeChild(clone);
     }
     /* 0-timeout to get the already changed text */
     function delayedResize () {
         window.setTimeout(resize, 0);
     }
-    observe(inputArea, 'change',  resize);
-    observe(inputArea, 'cut',     delayedResize);
-    observe(inputArea, 'paste',   delayedResize);
-    observe(inputArea, 'drop',    delayedResize);
-    observe(inputArea, 'keydown', delayedResize);
+    observe(text, 'change',  resize);
+    observe(text, 'cut',     delayedResize);
+    observe(text, 'paste',   delayedResize);
+    observe(text, 'drop',    delayedResize);
+    observe(text, 'keydown', delayedResize);
 
-//    inputArea.focus();
-//    inputArea.select();
+//    text.focus();
+//    text.select();
     resize();
-//    inputArea.blur();
 }

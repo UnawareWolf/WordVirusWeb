@@ -24,6 +24,9 @@ virusIcons {
     position: absolute;
     display: flex;
 }
+.hoverSelect td {
+    padding: 0px;
+}
 .parameters p {
     display: inline-block;
     position: relative;
@@ -97,6 +100,9 @@ input::-webkit-inner-spin-button {
     border: none;
     text-align: left;
     padding: 0px;
+    /*padding: 3px;
+    padding-left: 8px;
+    padding-right: 8px;*/
 }
 .keyButton:hover {
     cursor: pointer;
@@ -130,6 +136,7 @@ textarea {
 #layers {
     position: relative;
     top: -45px;
+    /*word-break: break-word;*/
 }
 .valuePadding {
   border: 0px inset #ccc;

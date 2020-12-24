@@ -63,11 +63,12 @@
     </tr>
     </table> <table class="parameters">
         <tr>
-            <td class="hoverSelect"><input class="keyButton" type="submit" name="action" value="Reset" formnovalidate/></td>
-        </tr>
-        <tr>
             <td class="hoverSelect"><input class="keyButton" id="generateButton" type="submit" name="action" value="Generate"/></td>
         </tr>
+        <tr>
+            <td class="hoverSelect"><input class="keyButton" type="submit" name="action" value="Reset" formnovalidate/></td>
+        </tr>
+
     </table>
 
     <script th:inline="javascript">
@@ -75,6 +76,7 @@
 
             setUpSubmitListener();
             setUpHiddenInputs();
+            //removeSubmitButtonPadding();
 
         /*]]>*/
     </script>
