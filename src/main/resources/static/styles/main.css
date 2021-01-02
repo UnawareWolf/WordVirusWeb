@@ -137,6 +137,7 @@ textarea {
     position: relative;
     top: -45px;
     /*word-break: break-word;*/
+    white-space: pre-wrap;
 }
 .valuePadding {
   border: 0px inset #ccc;

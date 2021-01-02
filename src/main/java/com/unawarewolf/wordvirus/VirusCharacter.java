@@ -243,6 +243,11 @@ public class VirusCharacter {
         }
 
         List<String[]> csvData = FileHelper.getCSVContent(filePath);
+        int characterCode;
+        if (csvData.size() == 0) {
+            characterCode = character;
+        }
+
         return csvData.size() > 0 ? csvData : FileHelper.getCSVContent("csv_letter_maps/space-Table 1.csv");
     }
 
