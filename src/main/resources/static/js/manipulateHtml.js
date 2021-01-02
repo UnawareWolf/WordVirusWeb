@@ -145,7 +145,8 @@ function unifySpacing(miniFontSize) {
             }
         }
     }
-    maxTableWidth = (Math.ceil(maxTableWidth / (2 * miniFontSize)) * 2 * miniFontSize);
+    maxTableWidth = Math.ceil(maxTableWidth / (2 * miniFontSize)) * 2 * miniFontSize;
+    maxTableHeight = Math.ceil(maxTableHeight / miniFontSize) * miniFontSize;
     var smallTableWidth = maxTableWidth / 2;
     for (i in parameterTables) {
         if (!(parameterTables[i].style === undefined)) {
