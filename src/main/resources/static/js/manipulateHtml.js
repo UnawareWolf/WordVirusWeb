@@ -129,6 +129,7 @@ function unifySpacing(miniFontSize) {
 
     var parameterTables = document.getElementsByClassName('parameters');
     var maxTableWidth = 0;
+    var maxTableHeight = 0;
     for (i in parameterTables) {
         if (!(parameterTables[i].style === undefined)) {
             var table = parameterTables[i];
@@ -137,6 +138,10 @@ function unifySpacing(miniFontSize) {
             var tableWidth = getWidth(table);
             if (tableWidth > maxTableWidth) {
                 maxTableWidth = tableWidth;
+            }
+            tableHeight = getHeight(table);
+            if (tableHeight > maxTableHeight) {
+                maxTableHeight = tableHeight;
             }
         }
     }
@@ -152,12 +157,17 @@ function unifySpacing(miniFontSize) {
             else {
                 table.style.width = maxTableWidth + 'px';
             }
+            table.style.height = maxTableHeight + 'px';
         }
     }
 }
 
 function getWidth(tableElement) {
     return parseInt(window.getComputedStyle(tableElement, null).getPropertyValue('width').replace('px', ''));
+}
+
+function getHeight(tableElement) {
+    return parseInt(window.getComputedStyle(tableElement, null).getPropertyValue('height').replace('px', ''));
 }
 
 var observe;
