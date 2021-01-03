@@ -79,7 +79,8 @@
             setUpSubmitListener();
             setUpHiddenInputs();
             setUpFontSizeRounding();
-            //removeSubmitButtonPadding();
+            setUpBackgroundParallaxScroll();
+            setUpWindowResizeListener();
 
         /*]]>*/
     </script>
@@ -119,6 +120,7 @@
     /*]]>*/
     </script>
 </form>
+<div class="overflowHidden"><img onload="resizeBackgroundImage();" id="backgroundImage" src="/images/falco.PNG"/></div>
 <!--<div class="footer">© 2020 (design: Richard Smith; programming: Hal Smith)</div>-->
 </body>
 </html>

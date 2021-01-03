@@ -72,12 +72,12 @@ function removeSubmitButtonPadding() {
 }
 
 function showGeneratedHideVector() {
-    document.getElementById('layers').style.color = 'black';
+    document.getElementById('layers').style.color = 'white';
     document.getElementById('inputArea').style.color = 'rgba(0, 0, 0, 0)';
 }
 
 function showVectorHideGenerated() {
-    document.getElementById('inputArea').style.color = 'black';
+    document.getElementById('inputArea').style.color = 'white';
     document.getElementById('layers').style.color = 'rgba(0, 0, 0, 0)';
 }
 
@@ -196,6 +196,48 @@ function getWidth(tableElement) {
 
 function getHeight(tableElement) {
     return parseInt(window.getComputedStyle(tableElement, null).getPropertyValue('height').replace('px', ''));
+}
+
+function backgroundScroll() {
+    var scrollPercent = getScrollPercent();
+    var backgroundImage = document.getElementById('backgroundImage');
+    var backgroundImageExcessHeight = backgroundImage.height - window.innerHeight;
+    var backgroundOffset = backgroundImageExcessHeight * scrollPercent / 100;
+    backgroundImage.style.top = - backgroundOffset + 'px';
+}
+
+function setUpBackgroundParallaxScroll() {
+    document.getElementById('body').onscroll = backgroundScroll;
+}
+
+function setUpWindowResizeListener() {
+    window.addEventListener('resize', onWindowResize);
+}
+
+function onWindowResize() {
+    resizeBackgroundImage();
+    backgroundScroll();
+}
+
+function getScrollPercent() {
+    var h = document.documentElement, 
+        b = document.body,
+        st = 'scrollTop',
+        sh = 'scrollHeight';
+    return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+}
+
+function resizeBackgroundImage() {
+    var image = document.getElementById('backgroundImage');
+    
+    if (window.innerWidth - image.width > window.innerHeight - image.height) {
+        backgroundImage.style.height = 'auto';
+        backgroundImage.style.width = 100 + '%';
+    }
+    else {
+        backgroundImage.style.width = 'auto';
+        backgroundImage.style.height = 100 + '%';
+    }
 }
 
 var observe;
