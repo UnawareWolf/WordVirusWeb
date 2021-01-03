@@ -208,7 +208,7 @@ public class GridSquare {
     }
 
     private String wrapOutputInColourTag(String output, char previousChar) {
-        String tagClass = "";
+        String tagClass = "normal";
 
         if (infectionLevel == 1) {
             tagClass = immune ? "blueSeven" : "blueOne";
@@ -223,9 +223,9 @@ public class GridSquare {
             tagClass = "pinkFour";
         }
 
-        if (previousChar == ' ' && coordinates.getX() == 0) {
-            output = "B" + output;
-        }
+//        if (previousChar == ' ' && coordinates.getX() == 0) {
+//            output = "B" + output;
+//        }
 
         if (tagClass.length() > 0) {
             output = "<span class=\"" + tagClass + "\">" + output + "</span>";

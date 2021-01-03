@@ -64,7 +64,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.numberInput {
+.numberInput, .fontSizeInput {
     box-sizing: border-box;
     width: 70px;
     position: relative;
@@ -73,7 +73,7 @@ input::-webkit-inner-spin-button {
     font-size: 12px;
     -moz-appearance: textfield;
 }
-.numberInput:focus {
+.numberInput:focus, .fontSizeInput:focus {
     outline: 0;
 }
 .percentageText {
@@ -156,7 +156,8 @@ textarea {
     outline: 0;
 }
 span {
-    white-space: break-spaces;
+    /*white-space: break-spaces;*/
+    white-space: pre-wrap;
 }
 span.blueOne {
     color: #33cccc;
@@ -178,4 +179,6 @@ span.brownSix {
 }
 span.blueSeven {
     color: #336666;
+}
+span.normal {
 }

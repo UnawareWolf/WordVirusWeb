@@ -163,9 +163,9 @@ public class InputConfiguration {
         this.recoveryHigh = recoveryHigh;
     }
 
-//    public void setFontSize(int fontSize) {
-//        this.fontSize = fontSize;
-//    }
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
 
     public void setInitiallyInfected(char initiallyInfected) {
         this.initiallyInfected = initiallyInfected;

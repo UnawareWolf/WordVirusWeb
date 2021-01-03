@@ -81,11 +81,38 @@ function showVectorHideGenerated() {
     document.getElementById('layers').style.color = 'rgba(0, 0, 0, 0)';
 }
 
+function setLayerOffset(fontSize) {
+    var layerElement = document.getElementById('layers');
+    layerElement.style.top = - (45 * fontSize / 120) + 'px';
+}
+
+function roundElementValue(element, roundTo) {
+    if (Number.isInteger(element.valueAsNumber)) {
+        if (element.value >= roundTo) {
+            element.value = Math.round(element.value / roundTo) * roundTo;
+        }
+        else {
+            element.value = roundTo;
+        }
+    }
+}
+
+function setUpFontSizeRounding() {
+    var fontSizeElement = document.getElementById('fontSizeElement');
+    fontSizeElement.onblur = function() {
+        roundElementValue(this, 12);
+    };
+    fontSizeElement.oninvalid = function() {
+        roundElementValue(this, 12);
+    };
+}
+
 function setUpLayerStyles(noOfLayers, fontSize) {
-    var inputAreaTop = document.getElementById("inputArea").getBoundingClientRect().top
+    setLayerOffset(fontSize);
+    var inputAreaTop = document.getElementById("inputArea").getBoundingClientRect().top;
     var styleSheet = document.styleSheets[0];
     for (var i = 0; i < noOfLayers; i++) {
-        var layerTop = i*fontSize;// + inputAreaTop;// - 55;
+        var layerTop = i*fontSize;
         var rule = "#layer" + i + " {top: " + layerTop + "px;}";
         styleSheet.insertRule(rule, 0);
     }

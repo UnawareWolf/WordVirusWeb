@@ -73,8 +73,11 @@ public class VirusGenerator {
                     currentLayerOutput += "\n";
                 }
 
-                else if (virusCharacter.getCharacter() == ' ' || virusCharacter.getCharacter() == '-') {
+                else if (virusCharacter.getCharacter() == ' ') {
                     currentLayerOutput += "  ";
+                }
+                else if (virusCharacter.getCharacter() == '-') {
+                    currentLayerOutput += " ";
                 }
 
                 previousChar = virusCharacter.getCharacter();
