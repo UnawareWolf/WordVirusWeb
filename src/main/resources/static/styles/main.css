@@ -157,7 +157,7 @@ textarea {
 }
 span {
     /*white-space: break-spaces;*/
-    white-space: pre-wrap;
+    /*white-space: pre-wrap;*/
 }
 span.blueOne {
     color: #33cccc;
