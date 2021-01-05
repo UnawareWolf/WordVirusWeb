@@ -79,7 +79,6 @@
             setUpSubmitListener();
             setUpHiddenInputs();
             setUpFontSizeRounding();
-            setUpBackgroundParallaxScroll();
             setUpWindowResizeListener();
 
         /*]]>*/
@@ -113,14 +112,14 @@
     setLayerOffset(fontSize);
     fontSizeMult = fontSize * 5 / 6 + 'px';
 
-    //console.log(fontSizeMult);
 
     document.getElementById('inputArea').style.fontSize = fontSizeMult;
 
     /*]]>*/
     </script>
 </form>
-<div class="overflowHidden"><img onload="resizeBackgroundImage();" id="backgroundImage" src="/images/falco.PNG"/></div>
-<!--<div class="footer">© 2020 (design: Richard Smith; programming: Hal Smith)</div>-->
+<div class="overflowHidden"><img onload="setUpBackgroundImage();" id="backgroundImage" th:src="@{${'/images/' + inputConfiguration.imagePath}}"/></div>
+<script>resizeBackgroundImage();</script>
+<!--<div class="footer">© 2021 (design: Richard Smith; programming: Hal Smith)</div>-->
 </body>
 </html>

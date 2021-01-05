@@ -2,6 +2,7 @@ package com.unawarewolf.wordvirus;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.*;
 
 public class InputConfiguration {
@@ -19,6 +20,8 @@ public class InputConfiguration {
     private static final char DEFAULT_INITIALLY_INFECTED = 'e';
 
     private static final int DEFAULT_FONT_SIZE = 120;
+    
+    private String imagePath;
 
     @NotNull
     private int infectionLow, infectionHigh, progressionLow, progressionHigh,
@@ -53,6 +56,12 @@ public class InputConfiguration {
 //        initiallyInfected = DEFAULT_INITIALLY_INFECTED;
         randomInitiallyInfected = DEFAULT_RANDOM_INITIALLY_INFECTED;
         output = new String[12];
+        try {
+            imagePath = FileHelper.getRandomImagePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setInput(String input) {
@@ -134,6 +143,10 @@ public class InputConfiguration {
     public char getDefaultInitiallyInfected() {
         return DEFAULT_INITIALLY_INFECTED;
     }
+    
+    public String getImagePath() {
+        return imagePath;
+    }
 
     public boolean isColourStyle() {
         return colourStyle;
@@ -208,5 +221,9 @@ public class InputConfiguration {
 
     public void setShowGenerated(boolean showGenerated) {
         this.showGenerated = showGenerated;
+    }
+    
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

@@ -124,16 +124,9 @@ function populateLayers(content) {
     for (i = 0; i < content.length; i++) {
         var division = document.createElement('virusIcons');
         division.id = "layer" + i;
-//        division.className = "virusIcons";
-
-//        layerContent = "<a>";
-
         if (content[i].length > 0) {
             division.innerHTML = content[i];
-//            layerContent += content[i];
         }
-//        layerContent += "</a>";
-//        division.innerHTML = layerContent;
         document.getElementById("layers").appendChild(division);
     }
 }
@@ -227,10 +220,15 @@ function getScrollPercent() {
     return (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
 }
 
+function setUpBackgroundImage() {
+    setUpBackgroundParallaxScroll();
+    resizeBackgroundImage();
+}
+
 function resizeBackgroundImage() {
     var image = document.getElementById('backgroundImage');
     
-    if (window.innerWidth - image.width > window.innerHeight - image.height) {
+    if ((image.width - window.innerWidth) < (image.height - window.innerHeight)) {
         backgroundImage.style.height = 'auto';
         backgroundImage.style.width = 100 + '%';
     }

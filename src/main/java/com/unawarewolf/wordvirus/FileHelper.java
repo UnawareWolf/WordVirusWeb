@@ -1,8 +1,12 @@
 package com.unawarewolf.wordvirus;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FileHelper {
 
@@ -61,6 +65,23 @@ public class FileHelper {
 
         }
         return document;
+    }
+    
+    public static String getRandomImagePath() throws IOException {
+        String imagePath = "";
+        PathMatchingResourcePatternResolver matchingResolver = new PathMatchingResourcePatternResolver();
+        
+        Resource imagesRoot = matchingResolver.getResource("/static/images");
+        
+        String[] imagePaths = imagesRoot.getFile().list();
+        if (imagePaths != null && imagePaths.length > 0) {
+            imagePath = imagePaths[new Random().nextInt(imagePaths.length)];
+        }
+        return imagePath;
+    }
+    
+    public static String getImageInfo(String imagePath) {
+        return imagePath;
     }
 
 }
