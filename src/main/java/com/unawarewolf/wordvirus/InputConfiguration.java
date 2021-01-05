@@ -3,6 +3,7 @@ package com.unawarewolf.wordvirus;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class InputConfiguration {
@@ -58,7 +59,7 @@ public class InputConfiguration {
         output = new String[12];
         try {
             imagePath = FileHelper.getRandomImagePath();
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
