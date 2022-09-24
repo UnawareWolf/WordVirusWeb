@@ -16,8 +16,8 @@ Each character inherits the infections of the previous occurrence of the charact
 
 # The Code
 
-The backend is written in Java using the Spring Boot framework. The infection logic and Spring Boot code are located here: [backend][https://github.com/UnawareWolf/WordVirusWeb/tree/master/src/main/java/com/unawarewolf/wordvirus].
+The backend is written in Java using the Spring Boot framework. The infection logic and Spring Boot code are located here: [backend](https://github.com/UnawareWolf/WordVirusWeb/tree/master/src/main/java/com/unawarewolf/wordvirus).
 
-The front end has a little Javascript to help the character nodes line up properly. This can be found here: [front end][https://github.com/UnawareWolf/WordVirusWeb/blob/master/src/main/resources/static/js/manipulateHtml.js].
+The front end has a little Javascript to help the character nodes line up properly. This can be found here: [front end](https://github.com/UnawareWolf/WordVirusWeb/blob/master/src/main/resources/static/js/manipulateHtml.js).
 
-The font assets containing the node graphics can be found here: [font][https://github.com/UnawareWolf/WordVirusWeb/tree/master/src/main/resources/static/fonts].
+The font assets containing the node graphics can be found here: [font](https://github.com/UnawareWolf/WordVirusWeb/tree/master/src/main/resources/static/fonts).
